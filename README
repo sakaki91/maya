@@ -5,16 +5,13 @@ the use of maya is initially NOT RECOMMENDED, as it is in the early stages of de
 
 currently functional packages:
 ------------------------------
-
-pfetch, neofetch, discord, vault
+https://github.com/sakaki91/maya/tree/main/pkg
 
 minimum requirements:
 ---------------------
-
-   core-utils, base-devel, tar
+core-utils, base-devel, tar, unzip
 
 installation:
 -------------
-
    $ git clone https://github.com/sakaki91/maya $HOME/.local/share/maya
    $ mkdir -p $HOME/.local/bin && ln -sf $HOME/.local/share/maya/maya $HOME/.local/bin
