@@ -1,0 +1,21 @@
+#!/bin/bash
+
+NAME="htop"
+VERSION="git"
+SOURCE="https://github.com/htop-dev/htop/releases/download/$VERSION/htop-$VERSION.tar.xz"
+
+function install(){
+    git clone https://github.com/htop-dev/htop /tmp/$NAME
+    (
+        cd /tmp/$NAME
+        ./autogen.sh && ./configure && sudo make install
+    )
+}
+
+function remove(){
+    sudo rm -f /usr/local/bin/htop
+    sudo rm -f /usr/local/share/icons/hicolor/scalable/apps/htop.svg
+    sudo rm -f /usr/local/share/applications/htop.desktop
+    sudo rm -f /usr/local/share/man/man1/htop.1
+    sudo rm -f /usr/local/share/pixmaps/htop.png
+}

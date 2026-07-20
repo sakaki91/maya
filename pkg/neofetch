@@ -1,0 +1,14 @@
+#!/bin/bash
+
+NAME="neofetch"
+VERSION="git-7.0.1"
+SOURCE="https://github.com/dylanaraps/neofetch"
+
+function install(){
+    git clone $SOURCE /tmp/$NAME
+    sudo cp -r /tmp/$NAME/$NAME /bin/$NAME
+}
+
+function remove(){
+    sudo rm -f /bin/$NAME
+}
