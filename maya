@@ -3,19 +3,31 @@
 # ESTE SOFTWARE ATUALMENTE ESTÁ EM ESTADO INICIAL DE DESENVOLVIMENTO, NÃO É RECOMENDADO O USO.
 # RECOMENDO O USO APENAS PARA FINS DE CONTRIBUIÇÃO, ESTUDOS E DEBUGGING.
  
-MAYA_VERSION=0.2
+MAYA_VERSION=0.3
 MAYA_TREE="$HOME/.local/share/maya"
+# MAYA_TREE="$(pwd)" # Diretorio improvisado para desenvolvimento, favor não alterar o diretorio padrão =D
 
 case $1 in
     "--help")
-        printf "\n%-20s %0s\n" "--help" "show this message."
-        printf "%-20s %0s\n\n" "--version" "shows the version."
-        printf "%-20s %0s\n" "--list-installed" "it shows everything that maya has installed."
-        printf "%-20s %0s\n" "--install" "install something."
-        printf "%-20s %0s\n\n" "--remove" "remove something."
+        printf "\n\e[1m%-20s\e[0m %0s\n" "--help" "show this message."
+        printf "\e[1m%-20s\e[0m %0s\n\n" "--version" "shows the version."
+        printf "\e[1m%-20s\e[0m %0s\n" "--search" "search and filter for the desired binaries."
+        printf "\e[1m%-20s\e[0m %0s\n" "--list" "shows all binaries available for installation."
+        printf "\e[1m%-20s\e[0m %0s\n\n" "--list-installed" "it shows everything that maya has installed."
+        printf "\e[1m%-20s\e[0m %0s\n" "--clean" "clears the /tmp directory (temporary directory where maya .tar files are stored)."
+        printf "\e[1m%-20s\e[0m %0s\n" "--install" "install something."
+        printf "\e[1m%-20s\e[0m %0s\n\n" "--remove" "remove something."
     ;;
-    "--version") printf "maya-$MAYA_VERSION\n" ;;
-    "--list-installed") ls $MAYA_TREE/pkg/info --color=no ;;
+    "--version") printf "\e[0;95mmaya-$MAYA_VERSION\e[0m\n" ;;
+    "--list-installed")
+    [[ ! $(ls "$MAYA_TREE/pkg/info") ]] && printf "\e[1mempty:\e[0m no binaries have been installed by maya (yet...)\e[0m\n" && exit
+        printf "\e[0;92m$(ls $MAYA_TREE/pkg/info -p -1)\e[0m\n"
+    ;;
+    "--list") printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1 | grep -v /)\e[0m\n" ;;
+    "--search")
+    [[ -z $2 ]] && printf "\e[0;91merror:\e[0m empty value.\n" && exit
+        printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1 | grep -v / | grep $2)\e[0m\n"
+    ;;
     "--install")
         [[ ! -f "$MAYA_TREE/pkg/$2" ]] && printf "\e[0;91merror:\e[0m the package does not exist.\n" && exit
         source "$MAYA_TREE/pkg/$2"
@@ -23,12 +35,16 @@ case $1 in
         touch "$MAYA_TREE/pkg/info/$NAME"
     ;;
     "--remove")
+        [[ -z $2 ]] && printf "\e[0;91merror:\e[0m empty value.\n" && exit
         [[ ! -f "$MAYA_TREE/pkg/$2" ]] && printf "\e[0;91merror:\e[0m the package does not exist.\n" && exit
         source "$MAYA_TREE/pkg/$2"
         remove
         rm -f "$MAYA_TREE/pkg/info/$NAME"
     ;;
+    "--clean")
+        rm -rf /tmp/ &>> /dev/null
+    ;;
     *)
-        printf ":: lost? type: \e[1mmaya --help\e[0m\n"
+        printf "lost? type: \e[1mmaya --help\e[0m\n"
     ;;
 esac
