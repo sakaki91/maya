@@ -6,10 +6,12 @@ the use of maya is initially NOT RECOMMENDED, as it is in the early stages of de
 currently functional packages:
 ------------------------------
 
-pfetch, neofetch
+pfetch, neofetch, discord, vault
 
-The GCC package doesn't work (yet), and htop is experimental; if your distro has the development kit for compilation, it will work.
-I'm still implementing kits like GCC/G++...
+minimum requirements:
+---------------------
+
+   core-utils, base-devel, tar
 
 installation:
 -------------

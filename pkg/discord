@@ -1,0 +1,19 @@
+#!/bin/bash
+
+NAME="discord"
+VERSION="1.0.149"
+SOURCE="https://stable.dl2.discordapp.net/apps/linux/$VERSION/$NAME-$VERSION.tar.gz"
+
+function install(){
+    wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
+    tar -xvf /tmp/maya/$NAME/$NAME-$VERSION.tar.gz --directory=/tmp/maya/$NAME
+    sudo cp /tmp/maya/$NAME/Discord/discord /usr/bin/discord
+    sudo cp /tmp/maya/$NAME/Discord/discord.desktop /usr/share/applications/discord.desktop
+    sudo cp /tmp/maya/$NAME/Discord/discord.png /usr/local/share/icons/hicolor/scalable/apps/discord.png
+}
+
+function remove(){
+    sudo rm -f /tmp/maya/$NAME/Discord/discord /usr/bin/discord
+    sudo rm -f /tmp/maya/$NAME/Discord/discord.desktop /usr/share/applications/discord.desktop
+    sudo rm -f /tmp/maya/$NAME/Discord/discord.png /usr/local/share/icons/hicolor/scalable/apps/discord.png
+}

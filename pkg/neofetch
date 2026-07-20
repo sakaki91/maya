@@ -5,10 +5,10 @@ VERSION="git-7.0.1"
 SOURCE="https://github.com/dylanaraps/neofetch"
 
 function install(){
-    git clone $SOURCE /tmp/$NAME
-    sudo cp -r /tmp/$NAME/$NAME /bin/$NAME
+    git clone $SOURCE /tmp/maya/$NAME
+    sudo cp -r /tmp/maya/$NAME/$NAME /bin/$NAME
 }
 
 function remove(){
-    sudo rm -f /bin/$NAME
+    sudo rm -rf /bin/$NAME "$MAYA_TMP/$NAME"
 }
