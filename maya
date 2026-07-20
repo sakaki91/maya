@@ -3,9 +3,10 @@
 # ESTE SOFTWARE ATUALMENTE ESTÁ EM ESTADO INICIAL DE DESENVOLVIMENTO, NÃO É RECOMENDADO O USO.
 # RECOMENDO O USO APENAS PARA FINS DE CONTRIBUIÇÃO, ESTUDOS E DEBUGGING.
  
-MAYA_VERSION=0.3
+MAYA_VERSION=0.3-1
 MAYA_TREE="$HOME/.local/share/maya"
 # MAYA_TREE="$(pwd)" # Diretorio improvisado para desenvolvimento, favor não alterar o diretorio padrão =D
+[[ ! -d "$MAYA_TREE/pkg/info" ]] && mkdir -p "$MAYA_TREE/pkg/info"
 
 case $1 in
     "--help")
