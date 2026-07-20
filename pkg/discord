@@ -14,7 +14,7 @@ function install(){
 }
 
 function remove(){
-    sudo /usr/bin/discord
-    sudo /usr/share/applications/discord.desktop
-    sudo /usr/local/share/icons/hicolor/scalable/apps/discord.png
+    sudo rm -f /usr/bin/discord
+    sudo rm -f /usr/share/applications/discord.desktop
+    sudo rm -f /usr/local/share/icons/hicolor/scalable/apps/discord.png
 }
