@@ -15,4 +15,4 @@ installation:
 -------------
 
    $ git clone https://github.com/sakaki91/maya $HOME/.local/share/maya
-   $ mkdir $HOME/local/bin && ln -sf $HOME/.local/share/maya/maya $HOME/.local/bin
+   $ mkdir -p $HOME/.local/bin && ln -sf $HOME/.local/share/maya/maya $HOME/.local/bin
