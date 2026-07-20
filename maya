@@ -5,7 +5,7 @@
 
 # MAYA_TREE="$(pwd)" # Diretorio improvisado para desenvolvimento, favor não alterar o diretorio padrão =D
 
-MAYA_VERSION=0.5
+MAYA_VERSION=0.5-1
 MAYA_TREE="$HOME/.local/share/maya"
 MAYA_TMP="/tmp/maya"
 [[ ! -d "$MAYA_TREE/pkg/info" ]] && mkdir -p "$MAYA_TREE/pkg/info"
@@ -25,6 +25,7 @@ case $1 in
         printf "\e[1m%-20s\e[0m %0s\n" "--list" "shows all binaries available for installation."
         printf "\e[1m%-20s\e[0m %0s\n\n" "--list-installed" "it shows everything that maya has installed."
         printf "\e[1m%-20s\e[0m %0s\n" "--clean" "clears the $MAYA_TMP directory (temporary directory where maya .tar files are stored)."
+        printf "\e[1m%-20s\e[0m %0s\n" "--sync-maya" "update maya and recipes by pulling directly from the git repository."
         printf "\e[1m%-20s\e[0m %0s\n" "--install" "install something."
         printf "\e[1m%-20s\e[0m %0s\n\n" "--remove" "remove something."
     ;;
