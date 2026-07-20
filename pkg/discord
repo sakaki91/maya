@@ -2,6 +2,7 @@
 
 NAME="discord"
 VERSION="1.0.149"
+DESCRIPTION="All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone."
 SOURCE="https://stable.dl2.discordapp.net/apps/linux/$VERSION/$NAME-$VERSION.tar.gz"
 
 function install(){
@@ -13,7 +14,7 @@ function install(){
 }
 
 function remove(){
-    sudo rm -f /tmp/maya/$NAME/Discord/discord /usr/bin/discord
-    sudo rm -f /tmp/maya/$NAME/Discord/discord.desktop /usr/share/applications/discord.desktop
-    sudo rm -f /tmp/maya/$NAME/Discord/discord.png /usr/local/share/icons/hicolor/scalable/apps/discord.png
+    sudo /usr/bin/discord
+    sudo /usr/share/applications/discord.desktop
+    sudo /usr/local/share/icons/hicolor/scalable/apps/discord.png
 }

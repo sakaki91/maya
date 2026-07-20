@@ -1,7 +1,8 @@
 #!/bin/bash
 
 NAME="vault"
-VERSION="git"
+VERSION="git-1.6"
+DESCRIPTION="A lightweight and compact command-line launcher."
 SOURCE="https://github.com/sakaki91/vault"
 
 function install(){

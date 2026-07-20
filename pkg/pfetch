@@ -2,6 +2,7 @@
 
 NAME="pfetch"
 VERSION="git-0.6.0"
+DESCRIPTION="A pretty system information tool written in POSIX sh."
 SOURCE='https://github.com/dylanaraps/pfetch'
 
 function install(){

@@ -2,22 +2,29 @@
 
 # ESTE SOFTWARE ATUALMENTE ESTÁ EM ESTADO INICIAL DE DESENVOLVIMENTO, NÃO É RECOMENDADO O USO.
 # RECOMENDO O USO APENAS PARA FINS DE CONTRIBUIÇÃO, ESTUDOS E DEBUGGING.
- 
-MAYA_VERSION=0.4
-MAYA_TREE="$HOME/.local/share/maya"
+
 # MAYA_TREE="$(pwd)" # Diretorio improvisado para desenvolvimento, favor não alterar o diretorio padrão =D
+
+MAYA_VERSION=0.5
+MAYA_TREE="$HOME/.local/share/maya"
 MAYA_TMP="/tmp/maya"
 [[ ! -d "$MAYA_TREE/pkg/info" ]] && mkdir -p "$MAYA_TREE/pkg/info"
 [[ ! -d "$MAYA_TMP" ]] && mkdir -p "$MAYA_TMP"
+
+function validate(){
+    [[ -z $1 ]] && printf "\e[0;91merror:\e[0m empty value.\n" && exit
+    [[ ! -f "$MAYA_TREE/pkg/$1" ]] && printf "\e[0;91merror:\e[0m the package does not exist.\n" && exit
+}
 
 case $1 in
     "--help")
         printf "\n\e[1m%-20s\e[0m %0s\n" "--help" "show this message."
         printf "\e[1m%-20s\e[0m %0s\n\n" "--version" "shows the version."
         printf "\e[1m%-20s\e[0m %0s\n" "--search" "search and filter for the desired binaries."
+        printf "\e[1m%-20s\e[0m %0s\n" "--about" "view the metadata (version, name, and description) of a package."
         printf "\e[1m%-20s\e[0m %0s\n" "--list" "shows all binaries available for installation."
         printf "\e[1m%-20s\e[0m %0s\n\n" "--list-installed" "it shows everything that maya has installed."
-        printf "\e[1m%-20s\e[0m %0s\n" "--clean" "clears the /tmp directory (temporary directory where maya .tar files are stored)."
+        printf "\e[1m%-20s\e[0m %0s\n" "--clean" "clears the $MAYA_TMP directory (temporary directory where maya .tar files are stored)."
         printf "\e[1m%-20s\e[0m %0s\n" "--install" "install something."
         printf "\e[1m%-20s\e[0m %0s\n\n" "--remove" "remove something."
     ;;
@@ -28,18 +35,26 @@ case $1 in
     ;;
     "--list") printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1 | grep -v /)\e[0m\n" ;;
     "--search")
-    [[ -z $2 ]] && printf "\e[0;91merror:\e[0m empty value.\n" && exit
+        [[ -z $1 ]] && printf "\e[0;91merror:\e[0m empty value.\n" && exit
         printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1 | grep -v / | grep $2)\e[0m\n"
     ;;
+    "--about")
+        validate "$2"        
+        source "$MAYA_TREE/pkg/$2"
+        printf "\e[1m%-25s\e[0m %10s\n" "$NAME :: $VERSION" "$DESCRIPTION"
+    ;;
+    "--sync-maya")
+        [[ ! $(command -v git) ]] && printf "\e[0;91merror:\e[0m git not found\n." && exit
+        (cd $MAYA_TREE && git pull)
+    ;;
     "--install")
-        [[ ! -f "$MAYA_TREE/pkg/$2" ]] && printf "\e[0;91merror:\e[0m the package does not exist.\n" && exit
+        validate "$2"
         source "$MAYA_TREE/pkg/$2"
         install
         touch "$MAYA_TREE/pkg/info/$NAME"
     ;;
     "--remove")
-        [[ -z $2 ]] && printf "\e[0;91merror:\e[0m empty value.\n" && exit
-        [[ ! -f "$MAYA_TREE/pkg/$2" ]] && printf "\e[0;91merror:\e[0m the package does not exist.\n" && exit
+        validate "$2"
         source "$MAYA_TREE/pkg/$2"
         remove
         rm -f "$MAYA_TREE/pkg/info/$NAME"

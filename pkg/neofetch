@@ -2,6 +2,7 @@
 
 NAME="neofetch"
 VERSION="git-7.0.1"
+DESCRIPTION="A command-line system information tool written in bash 3.2+"
 SOURCE="https://github.com/dylanaraps/neofetch"
 
 function install(){
