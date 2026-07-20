@@ -1,0 +1,19 @@
+#!/bin/bash
+
+NAME="fastfetch"
+VERSION="git"
+DESCRIPTION="A maintained, feature-rich and performance oriented, neofetch like system information tool."
+SOURCE="https://github.com/$NAME-cli/$NAME"
+
+function install(){
+    git clone $SOURCE /tmp/maya/$NAME
+    (
+        cd /tmp/maya/$NAME
+        ./run.sh
+        sudo cp $(pwd)/build/$NAME /usr/bin/$NAME
+    )
+}
+
+function remove(){
+    sudo rm -f /usr/bin/$NAME
+}
