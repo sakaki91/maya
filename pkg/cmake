@@ -1,0 +1,24 @@
+#!/bin/bash
+
+NAME="cmake"
+VERSION="4.4.0"
+DESCRIPTION="CMake, the cross-platform, open-source build system."
+SOURCE="https://github.com/Kitware/CMake/releases/download/v$VERSION/$NAME-$VERSION.tar.gz"
+
+function install(){
+    wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
+    tar -xvf /tmp/maya/$NAME/$NAME-$VERSION.tar.gz --directory=/tmp/maya/$NAME
+    (
+        cd /tmp/maya/$NAME/$NAME-$VERSION
+        ./bootstrap
+        sudo make install
+        #sudo ./configure --disable-dependency-tracking
+        #sudo ./build.sh
+        #sudo ./make
+        #sudo ./make install
+    )
+}
+
+function remove(){
+
+}

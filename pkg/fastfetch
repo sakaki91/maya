@@ -6,6 +6,7 @@ DESCRIPTION="A maintained, feature-rich and performance oriented, neofetch like 
 SOURCE="https://github.com/$NAME-cli/$NAME"
 
 function install(){
+    [[ ! $(command -v ${DEPENDENCIES[0]}) ]] && printf "exit\n" && exit
     git clone $SOURCE /tmp/maya/$NAME
     (
         cd /tmp/maya/$NAME
