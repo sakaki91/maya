@@ -1,0 +1,19 @@
+#!/bin/bash
+
+NAME="cbonsai"
+VERSION="git"
+DESCRIPTION="grow bonsai trees in your terminal."
+SOURCE="https://gitlab.com/jallbrit/$NAME"
+DEPENDENCIES=(
+    "make"
+)
+
+function install(){
+    git clone $SOURCE /tmp/maya/$NAME
+    (cd /tmp/maya/$NAME && sudo make install)
+}
+
+function remove(){
+    sudo rm -f /usr/local/bin/cbonsai
+    sudo rm -f /usr/local/share/bash-completion/completions/cbonsai
+}
