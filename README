@@ -1,19 +1,20 @@
-maya package manager.
+Maya Package Manager.
 =====================
 
-the use of maya is initially NOT RECOMMENDED, as it is in the early stages of development, and important decisions are still being made.
+! Found any bugs? Please report them: https://github.com/sakaki91/maya/issues
+! Need help? See the documentation: https://sakaki91.github.io/src/maya-wiki.html
 
-Found any bugs? Please report them: https://github.com/sakaki91/maya/issues
-
-currently functional packages:
-------------------------------
-https://github.com/sakaki91/maya/tree/main/pkg
-
-minimum requirements:
+Minimum Requirements:
 ---------------------
-core-utils, base-devel, tar, unzip
+coreutils, gcc, git
 
-installation:
+Installation:
 -------------
    $ git clone https://github.com/sakaki91/maya $HOME/.local/share/maya
-   $ mkdir -p $HOME/.local/bin && ln -sf $HOME/.local/share/maya/maya $HOME/.local/bin
+
+If you don't have a local binaries folder, run this:
+
+   mkdir -p $HOME/.local/bin && ln -sf $HOME/.local/share/maya/maya $HOME/.local/bin
+   $ echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME"/.bashrc
+
+or if you use zsh/fish, adapt it to your shell's .rc (e.g: .zshrc) file.
