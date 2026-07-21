@@ -3,6 +3,8 @@ maya package manager.
 
 the use of maya is initially NOT RECOMMENDED, as it is in the early stages of development, and important decisions are still being made.
 
+Found any bugs? Please report them: https://github.com/sakaki91/maya/issues
+
 currently functional packages:
 ------------------------------
 https://github.com/sakaki91/maya/tree/main/pkg
