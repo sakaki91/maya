@@ -4,6 +4,9 @@ NAME="cmake"
 VERSION="4.4.0"
 DESCRIPTION="CMake, the cross-platform, open-source build system."
 SOURCE="https://github.com/Kitware/CMake/releases/download/v$VERSION/$NAME-$VERSION.tar.gz"
+DEPENDENCIES=(
+    "make"
+)
 
 function install(){
     wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
@@ -19,6 +22,6 @@ function install(){
     )
 }
 
-function remove(){
-
-}
+#function remove(){
+#
+#}

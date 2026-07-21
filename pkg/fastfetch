@@ -4,6 +4,9 @@ NAME="fastfetch"
 VERSION="git"
 DESCRIPTION="A maintained, feature-rich and performance oriented, neofetch like system information tool."
 SOURCE="https://github.com/$NAME-cli/$NAME"
+DEPENDENCIES=(
+    "cmake"
+)
 
 function install(){
     [[ ! $(command -v ${DEPENDENCIES[0]}) ]] && printf "exit\n" && exit
