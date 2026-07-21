@@ -1,9 +1,13 @@
 #!/bin/bash
 
 NAME="lsfg-vk"
-VERSION="git-1.0.0"
+VERSION="1.0.0"
 DESCRIPTION="Lossless Scaling Frame Generation on Linux."
 SOURCE="https://github.com/PancakeTAS/$NAME/releases/download/v$VERSION/$NAME-$VERSION-x86_64.zip"
+DEPENDENCIES=(
+    "wget"
+    "unzip"
+)
 
 function install(){
     wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME

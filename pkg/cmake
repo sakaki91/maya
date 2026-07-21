@@ -6,6 +6,7 @@ DESCRIPTION="CMake, the cross-platform, open-source build system."
 SOURCE="https://github.com/Kitware/CMake/releases/download/v$VERSION/$NAME-$VERSION.tar.gz"
 DEPENDENCIES=(
     "make"
+    "tar"
 )
 
 function install(){
@@ -15,13 +16,15 @@ function install(){
         cd /tmp/maya/$NAME/$NAME-$VERSION
         ./bootstrap
         sudo make install
-        #sudo ./configure --disable-dependency-tracking
-        #sudo ./build.sh
-        #sudo ./make
-        #sudo ./make install
     )
 }
 
-#function remove(){
-#
-#}
+function remove(){
+    sudo rm -rf /usr/local/share/cmake* /usr/local/doc/cmake*
+    sudo rm -f /usr/local/bin/{ccmake,cmake,ctest,cpack}
+    sudo rm -f /usr/local/share/vim/vimfiles/indent/cmake.vim
+    sudo rm -f /usr/local/share/vim/vimfiles/syntax/cmake.vim
+    sudo rm -f /usr/local/share/emacs/site-lisp/cmake-mode.el
+    sudo rm -f /usr/local/share/aclocal/cmake.m4
+    sudo rm -f /usr/local/share/bash-completion/completions/{cmake,cpack,ctest}
+}

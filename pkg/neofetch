@@ -1,13 +1,13 @@
 #!/bin/bash
 
 NAME="neofetch"
-VERSION="git-7.0.1"
+VERSION="7.0.1"
 DESCRIPTION="A command-line system information tool written in bash 3.2+"
 SOURCE="https://github.com/dylanaraps/neofetch"
 
 function install(){
     git clone $SOURCE /tmp/maya/$NAME
-    sudo cp -r /tmp/maya/$NAME/$NAME /bin/$NAME
+    sudo cp /tmp/maya/$NAME/$NAME /usr/bin/$NAME
 }
 
 function remove(){

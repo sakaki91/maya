@@ -4,6 +4,11 @@ NAME="make"
 VERSION="4.4.1"
 DESCRIPTION="GNU make source code."
 SOURCE="https://ftp.gnu.org/gnu/$NAME/$NAME-$VERSION.tar.gz"
+DEPENDENCIES=(
+    "wget"
+    "tar"
+    "gcc"
+)
 
 function install(){
     wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
