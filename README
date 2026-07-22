@@ -3,17 +3,3 @@ Maya Package Manager.
 
 ! Found any bugs? Please report them: https://github.com/sakaki91/maya/issues
 ! Need help? See the documentation: https://sakaki91.github.io/src/maya-wiki.html
-
-Minimum Requirements:
----------------------
-coreutils, gcc, git
-
-Installation:
--------------
-   $ git clone https://github.com/sakaki91/maya $HOME/.local/share/maya
-
-If you don't have a local binaries folder, run this:
-   $ mkdir -p $HOME/.local/bin && ln -sf $HOME/.local/share/maya/maya $HOME/.local/bin
-   $ echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME"/.bashrc
-
-or if you use zsh/fish, adapt it to your shell's .rc (e.g: .zshrc) file.

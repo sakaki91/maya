@@ -1,0 +1,27 @@
+#!/bin/bash
+
+NAME="ufetch"
+VERSION="latest"
+DESCRIPTION="Tiny system info for Unix-like operating systems."
+SOURCE="https://gitlab.com/jschx/$NAME"
+
+function install(){
+    git clone $SOURCE /tmp/maya/$NAME
+    (
+        while true; do
+            clear
+            printf "\e[0;95m$(ls /tmp/maya/$NAME -1 | grep $NAME)\e[0m\n"
+            cd /tmp/maya/$NAME && read -ep "several options are available: " input
+            if [[ -f /tmp/maya/$NAME/$input ]]; then
+                sudo cp -r /tmp/maya/$NAME/$input /usr/local/bin/$NAME
+                break
+            else
+                printf "\e[0;91merror:\e[0m invalid option." && sleep 1.5
+            fi
+        done
+    )
+}
+
+function remove(){
+    sudo rm -f /usr/local/bin/$NAME
+}

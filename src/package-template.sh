@@ -1,13 +1,15 @@
 #!/bin/bash
 
-NAME=
-VERSION=
-SOURCE=
+NAME=""
+VERSION=""
+DESCRIPTION=""
+SOURCE=""
+DEPENDENCIES=()
 
 function install(){
-
+    # [...]
 }
 
 function remove(){
-
+    # [...]
 }
