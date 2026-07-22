@@ -13,7 +13,7 @@ Installation:
    $ git clone https://github.com/sakaki91/maya $HOME/.local/share/maya
 
 If you don't have a local binaries folder, run this:
-   mkdir -p $HOME/.local/bin && ln -sf $HOME/.local/share/maya/maya $HOME/.local/bin
+   $ mkdir -p $HOME/.local/bin && ln -sf $HOME/.local/share/maya/maya $HOME/.local/bin
    $ echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME"/.bashrc
 
 or if you use zsh/fish, adapt it to your shell's .rc (e.g: .zshrc) file.
