@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NAME="cbonsai"
-VERSION="git"
+VERSION="latest"
 DESCRIPTION="grow bonsai trees in your terminal."
 SOURCE="https://gitlab.com/jallbrit/$NAME"
 DEPENDENCIES=(

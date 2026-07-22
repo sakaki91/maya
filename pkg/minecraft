@@ -1,0 +1,16 @@
+#!/bin/bash
+
+NAME="minecraft"
+VERSION="latest"
+DESCRIPTION="Minecraft Java (Official Launcher)"
+SOURCE="https://launcher.mojang.com/download/Minecraft.tar.gz"
+
+function install(){
+    wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
+    tar -xvf /tmp/maya/$NAME/Minecraft.tar.gz --directory=/tmp/maya/$NAME
+    sudo cp /tmp/maya/$NAME/$NAME-launcher/$NAME-launcher /usr/local/bin/$NAME-launcher
+}
+
+function remove(){
+    sudo rm -f /usr/local/bin/$NAME-launcher
+}
