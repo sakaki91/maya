@@ -7,7 +7,7 @@ SOURCE="https://github.com/sakaki91/ren"
 
 function install(){
     git clone $SOURCE /tmp/maya/$NAME
-    sudo cp /tmp/maya/$NAME /usr/local/bin/$NAME
+    sudo cp /tmp/maya/$NAME/$NAME /usr/local/bin/$NAME
 }
 
 function remove(){
