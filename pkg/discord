@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NAME="discord"
-VERSION="1.0.149"
+VERSION="1.0.150"
 DESCRIPTION="All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone."
 SOURCE="https://stable.dl2.discordapp.net/apps/linux/$VERSION/$NAME-$VERSION.tar.gz"
 DEPENDENCIES=(

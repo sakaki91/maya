@@ -2,7 +2,7 @@
 
 # Written by @sakaki91, heavily inspired by Ports.
 
-MAYA_VERSION=1.2
+MAYA_VERSION=1.3
 MAYA_TREE=/usr/local/share/maya
 
 function rootCheck(){
@@ -47,7 +47,10 @@ case $1 in
 	   	[[ ! -z $2 ]] && printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1 | grep -v / | grep $2)\e[0m\n" && exit
 	;;
 	"--list-installed"|"-li") printf "\e[0;92m$(ls $MAYA_TREE/pkg/info -p -1)\e[0m\n" ;;
-	"--clean"|"-cl") rootCheck && rm -rf /tmp/maya ;;
+	"--clean"|"-cl") 
+		rootCheck
+		rm -rf /tmp/maya
+	;;
 	"--sync-maya"|"-sy")
 		rootCheck
 		[[ -d /tmp/maya/maya.source ]] && rm -rf /tmp/maya/maya.source
