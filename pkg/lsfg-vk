@@ -6,23 +6,23 @@ DESCRIPTION="Lossless Scaling Frame Generation on Linux."
 SOURCE="https://github.com/PancakeTAS/$NAME/releases/download/v$VERSION/$NAME-$VERSION-x86_64.zip"
 DEPENDENCIES=(
 	"wget"
-    	"unzip"
+    "unzip"
 )
 
 function install(){
-    	wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
-    	unzip /tmp/maya/$NAME/$NAME-$VERSION-x86_64.zip -d /tmp/maya/$NAME/$NAME-$VERSION-x86_64
-    	/usr/bin/install /tmp/maya/$NAME/$NAME-$VERSION-x86_64/bin/$NAME-ui /usr/bin/$NAME-ui
-    	/usr/bin/install /tmp/maya/$NAME/$NAME-$VERSION-x86_64/lib/liblsfg-vk.so /usr/lib/liblsfg-vk.so
-    	/usr/bin/install /tmp/maya/$NAME/$NAME-$VERSION-x86_64/share/applications/$NAME-ui.desktop /usr/share/applications/$NAME-ui.desktop
-    	/usr/bin/install /tmp/maya/$NAME/$NAME-$VERSION-x86_64/share/icons /usr/share/
-    	/usr/bin/install /tmp/maya/$NAME/$NAME-$VERSION-x86_64/share/vulkan/implicit_layer.d /usr/share/vulkan/
+    wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
+    unzip /tmp/maya/$NAME/$NAME-$VERSION-x86_64.zip -d /tmp/maya/$NAME/$NAME-$VERSION-x86_64
+    /usr/bin/install /tmp/maya/$NAME/$NAME-$VERSION-x86_64/bin/$NAME-ui /usr/bin/$NAME-ui
+    /usr/bin/install /tmp/maya/$NAME/$NAME-$VERSION-x86_64/lib/liblsfg-vk.so /usr/lib/liblsfg-vk.so
+    /usr/bin/install /tmp/maya/$NAME/$NAME-$VERSION-x86_64/share/applications/$NAME-ui.desktop /usr/share/applications/$NAME-ui.desktop
+    cp -r /tmp/maya/$NAME/$NAME-$VERSION-x86_64/share/icons /usr/share/
+    cp -r /tmp/maya/$NAME/$NAME-$VERSION-x86_64/share/vulkan/implicit_layer.d /usr/share/vulkan/
 }
 
 function remove(){
-    	rm -f /usr/bin/$NAME-ui
-    	rm -f /usr/lib/liblsfg-vk.so
+    rm -f /usr/bin/$NAME-ui
+    rm -f /usr/lib/liblsfg-vk.so
    	rm -f /usr/share/applications/$NAME-ui.desktop
-    	rm -f /usr/share/icons/hicolor/256x256/apps/gay.pancake.$NAME-ui.png
-    	rm -f /usr/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json
+    rm -f /usr/share/icons/hicolor/256x256/apps/gay.pancake.$NAME-ui.png
+    rm -f /usr/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json
 }

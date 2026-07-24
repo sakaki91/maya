@@ -11,7 +11,7 @@ DEPENDENCIES=(
 
 function install(){
 	wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
-    	tar -xvf /tmp/maya/$NAME/Minecraft.tar.gz --directory=/tmp/maya/$NAME
+    tar -xvf /tmp/maya/$NAME/Minecraft.tar.gz --directory=/tmp/maya/$NAME
    	/usr/bin/install /tmp/maya/$NAME/$NAME-launcher/$NAME-launcher /usr/local/bin/$NAME-launcher
 }
 

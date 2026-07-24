@@ -9,11 +9,11 @@ DEPENDENCIES=(
 )
 
 function install(){
-    	git clone $SOURCE $HOME/.local/share/$NAME
-    	(cd $HOME/.local/share/$NAME && git pull)
-    	[[ ! -d $HOME/.local/bin ]] && mkdir -p $HOME/.local/bin
-    	ln -sf $HOME/.local/share/$NAME/$NAME $HOME/.local/bin/$NAME
-    	printf 'Add "export PATH=''$HOME''/.local/bin:''$PATH''" to your ~/.bashrc/.zshrc file if it doesnt already exist.\n'
+    git clone $SOURCE $HOME/.local/share/$NAME
+    (cd $HOME/.local/share/$NAME && git pull)
+    [[ ! -d $HOME/.local/bin ]] && mkdir -p $HOME/.local/bin
+    ln -sf $HOME/.local/share/$NAME/$NAME $HOME/.local/bin/$NAME
+    printf 'Add "export PATH=''$HOME''/.local/bin:''$PATH''" to your ~/.bashrc/.zshrc file if it doesnt already exist.\n'
 }
 
 function remove(){

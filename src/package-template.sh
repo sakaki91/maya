@@ -11,5 +11,5 @@ function install(){
 }
 
 function remove(){
-    	# [...]
+    # [...]
 }

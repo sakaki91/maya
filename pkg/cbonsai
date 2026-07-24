@@ -11,11 +11,11 @@ DEPENDENCIES=(
 )
 
 function install(){
-    	git clone $SOURCE /tmp/maya/$NAME
-    	(cd /tmp/maya/$NAME && make install)
+    git clone $SOURCE /tmp/maya/$NAME
+    (cd /tmp/maya/$NAME && make install)
 }
 
 function remove(){
-    	rm -f /usr/local/bin/cbonsai
-    	rm -f /usr/local/share/bash-completion/completions/cbonsai
+    rm -f /usr/local/bin/cbonsai
+    rm -f /usr/local/share/bash-completion/completions/cbonsai
 }

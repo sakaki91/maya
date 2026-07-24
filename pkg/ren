@@ -9,10 +9,10 @@ DEPENDENCIES=(
 )
 
 function install(){
-    	git clone $SOURCE /tmp/maya/$NAME
-    	/usr/bin/install /tmp/maya/$NAME/$NAME /usr/local/bin/$NAME
+    git clone $SOURCE /tmp/maya/$NAME
+    /usr/bin/install /tmp/maya/$NAME/$NAME /usr/local/bin/$NAME
 }
 
 function remove(){
-    	rm -f /usr/local/bin/$NAME
+    rm -f /usr/local/bin/$NAME
 }

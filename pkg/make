@@ -6,27 +6,27 @@ DESCRIPTION="GNU make source code."
 SOURCE="https://ftp.gnu.org/gnu/$NAME/$NAME-$VERSION.tar.gz"
 DEPENDENCIES=(
 	"wget"
-    	"tar"
-    	"gcc"
+    "tar"
+    "gcc"
 )
 
 function install(){
 	wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
-    	tar -xvf /tmp/maya/$NAME/$NAME-$VERSION.tar.gz --directory=/tmp/maya/$NAME
-    	(
-        	cd /tmp/maya/$NAME/$NAME-$VERSION
-	        ./configure --disable-dependency-tracking
-        	./build.sh
-	        ./make
-        	./make install
+    tar -xvf /tmp/maya/$NAME/$NAME-$VERSION.tar.gz --directory=/tmp/maya/$NAME
+    (
+       	cd /tmp/maya/$NAME/$NAME-$VERSION
+	    ./configure --disable-dependency-tracking
+       	./build.sh
+	    ./make
+      	./make install
 	)
 }
 
 function remove(){
 	LOCALE="/usr/local/share/locale"
 	rm -f /usr/local/bin/make
-    	rm -f /usr/local/include/gnumake.h
-    	rm -f /usr/local/share/man/man1/make.1
-    	rm -f /usr/local/share/info/{make.info,make.info-1,make.info-2,make.info-3}
-    	rm -rf $LOCALE/*/LC_MESSAGES/make.mo
+    rm -f /usr/local/include/gnumake.h
+    rm -f /usr/local/share/man/man1/make.1
+    rm -f /usr/local/share/info/{make.info,make.info-1,make.info-2,make.info-3}
+    rm -rf $LOCALE/*/LC_MESSAGES/make.mo
 }

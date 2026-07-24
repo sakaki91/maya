@@ -6,19 +6,19 @@ DESCRIPTION="All-in-one voice and text chat for gamers that's free, secure, and 
 SOURCE="https://stable.dl2.discordapp.net/apps/linux/$VERSION/$NAME-$VERSION.tar.gz"
 DEPENDENCIES=(
 	"wget"
-        "tar"
+    "tar"
 )
 
 function install(){
 	wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
-    	tar -xvf /tmp/maya/$NAME/$NAME-$VERSION.tar.gz --directory=/tmp/maya/$NAME
-    	/usr/bin/install /tmp/maya/$NAME/Discord/discord /usr/local/bin/discord
-    	/usr/bin/install /tmp/maya/$NAME/Discord/discord.desktop /usr/local/share/applications/discord.desktop
-    	/usr/bin/install /tmp/maya/$NAME/Discord/discord.png /usr/local/share/icons/hicolor/scalable/apps/discord.png
+    tar -xvf /tmp/maya/$NAME/$NAME-$VERSION.tar.gz --directory=/tmp/maya/$NAME
+    /usr/bin/install /tmp/maya/$NAME/Discord/discord /usr/local/bin/discord
+    /usr/bin/install /tmp/maya/$NAME/Discord/discord.desktop /usr/local/share/applications/discord.desktop
+    /usr/bin/install /tmp/maya/$NAME/Discord/discord.png /usr/local/share/icons/hicolor/scalable/apps/discord.png
 }
 
 function remove(){
-    	rm -f /usr/bin/discord
-    	rm -f /usr/share/applications/discord.desktop
-    	rm -f /usr/local/share/icons/hicolor/scalable/apps/discord.png
+    rm -f /usr/bin/discord
+    rm -f /usr/share/applications/discord.desktop
+    rm -f /usr/local/share/icons/hicolor/scalable/apps/discord.png
 }

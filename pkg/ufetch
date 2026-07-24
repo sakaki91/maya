@@ -9,20 +9,20 @@ DEPENDENCIES=(
 )
 
 function install(){
-    	git clone $SOURCE /tmp/maya/$NAME
-    	(
-        	while true; do
-            		clear
-            		printf "\e[0;95m$(ls /tmp/maya/$NAME -1 | grep $NAME)\e[0m\n"
-            		cd /tmp/maya/$NAME && read -ep "several options are available: " input
-            		if [[ -f /tmp/maya/$NAME/$input ]]; then
-                		/usr/bin/install /tmp/maya/$NAME/$input /usr/local/bin/$NAME
-                		break
-            		else
-                		printf "\e[0;91merror:\e[0m invalid option." && sleep 1.5
-            		fi
-        	done
-    	)
+    git clone $SOURCE /tmp/maya/$NAME
+    (
+       	while true; do
+      		clear
+       		printf "\e[0;95m$(ls /tmp/maya/$NAME -1 | grep $NAME)\e[0m\n"
+       		cd /tmp/maya/$NAME && read -ep "several options are available: " input
+       		if [[ -f /tmp/maya/$NAME/$input ]]; then
+           		/usr/bin/install /tmp/maya/$NAME/$input /usr/local/bin/$NAME
+           		break
+       		else
+          		printf "\e[0;91merror:\e[0m invalid option." && sleep 1.5
+      		fi
+      	done
+	)
 }
 
 function remove(){
