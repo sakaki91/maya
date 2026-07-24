@@ -5,15 +5,17 @@ VERSION="latest"
 DESCRIPTION="grow bonsai trees in your terminal."
 SOURCE="https://gitlab.com/jallbrit/$NAME"
 DEPENDENCIES=(
-    "make"
+	"gcc"
+	"make"
+	"git"
 )
 
 function install(){
-    git clone $SOURCE /tmp/maya/$NAME
-    (cd /tmp/maya/$NAME && sudo make install)
+    	git clone $SOURCE /tmp/maya/$NAME
+    	(cd /tmp/maya/$NAME && make install)
 }
 
 function remove(){
-    sudo rm -f /usr/local/bin/cbonsai
-    sudo rm -f /usr/local/share/bash-completion/completions/cbonsai
+    	rm -f /usr/local/bin/cbonsai
+    	rm -f /usr/local/share/bash-completion/completions/cbonsai
 }

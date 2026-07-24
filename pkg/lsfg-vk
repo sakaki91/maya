@@ -5,25 +5,24 @@ VERSION="1.0.0"
 DESCRIPTION="Lossless Scaling Frame Generation on Linux."
 SOURCE="https://github.com/PancakeTAS/$NAME/releases/download/v$VERSION/$NAME-$VERSION-x86_64.zip"
 DEPENDENCIES=(
-    "wget"
-    "unzip"
+	"wget"
+    	"unzip"
 )
 
 function install(){
-    wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
-    unzip /tmp/maya/$NAME/$NAME-$VERSION-x86_64.zip -d /tmp/maya/$NAME/$NAME-$VERSION-x86_64
-    sudo cp /tmp/maya/$NAME/$NAME-$VERSION-x86_64/bin/$NAME-ui /usr/bin/$NAME-ui
-    sudo cp /tmp/maya/$NAME/$NAME-$VERSION-x86_64/lib/liblsfg-vk.so /usr/lib/liblsfg-vk.so
-    sudo cp /tmp/maya/$NAME/$NAME-$VERSION-x86_64/share/applications/$NAME-ui.desktop /usr/share/applications/$NAME-ui.desktop
-    sudo cp -r /tmp/maya/$NAME/$NAME-$VERSION-x86_64/share/icons /usr/share/
-    sudo cp -r /tmp/maya/$NAME/$NAME-$VERSION-x86_64/share/vulkan/implicit_layer.d /usr/share/vulkan/
-    sudo chmod +x /usr/bin/$NAME-ui
+    	wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
+    	unzip /tmp/maya/$NAME/$NAME-$VERSION-x86_64.zip -d /tmp/maya/$NAME/$NAME-$VERSION-x86_64
+    	/usr/bin/install /tmp/maya/$NAME/$NAME-$VERSION-x86_64/bin/$NAME-ui /usr/bin/$NAME-ui
+    	/usr/bin/install /tmp/maya/$NAME/$NAME-$VERSION-x86_64/lib/liblsfg-vk.so /usr/lib/liblsfg-vk.so
+    	/usr/bin/install /tmp/maya/$NAME/$NAME-$VERSION-x86_64/share/applications/$NAME-ui.desktop /usr/share/applications/$NAME-ui.desktop
+    	/usr/bin/install /tmp/maya/$NAME/$NAME-$VERSION-x86_64/share/icons /usr/share/
+    	/usr/bin/install /tmp/maya/$NAME/$NAME-$VERSION-x86_64/share/vulkan/implicit_layer.d /usr/share/vulkan/
 }
 
 function remove(){
-    sudo rm -f /usr/bin/$NAME-ui
-    sudo rm -f /usr/lib/liblsfg-vk.so
-    sudo rm -f /usr/share/applications/$NAME-ui.desktop
-    sudo rm -f /usr/share/icons/hicolor/256x256/apps/gay.pancake.$NAME-ui.png
-    sudo rm -f /usr/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json
+    	rm -f /usr/bin/$NAME-ui
+    	rm -f /usr/lib/liblsfg-vk.so
+   	rm -f /usr/share/applications/$NAME-ui.desktop
+    	rm -f /usr/share/icons/hicolor/256x256/apps/gay.pancake.$NAME-ui.png
+    	rm -f /usr/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json
 }

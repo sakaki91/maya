@@ -7,9 +7,9 @@ SOURCE=""
 DEPENDENCIES=()
 
 function install(){
-    # [...]
+	# [...]
 }
 
 function remove(){
-    # [...]
+    	# [...]
 }

@@ -5,26 +5,27 @@ VERSION="4.4.0"
 DESCRIPTION="CMake, the cross-platform, open-source build system."
 SOURCE="https://github.com/Kitware/CMake/releases/download/v$VERSION/$NAME-$VERSION.tar.gz"
 DEPENDENCIES=(
-    "make"
-    "tar"
+	"make"
+    	"tar"
+   	"wget"
 )
 
 function install(){
-    wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
-    tar -xvf /tmp/maya/$NAME/$NAME-$VERSION.tar.gz --directory=/tmp/maya/$NAME
-    (
-        cd /tmp/maya/$NAME/$NAME-$VERSION
-        ./bootstrap
-        sudo make install
-    )
+	wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
+	tar -xvf /tmp/maya/$NAME/$NAME-$VERSION.tar.gz --directory=/tmp/maya/$NAME
+    	(
+        	cd /tmp/maya/$NAME/$NAME-$VERSION
+        	./bootstrap
+        	make install
+    	)
 }
 
 function remove(){
-    sudo rm -rf /usr/local/share/cmake* /usr/local/doc/cmake*
-    sudo rm -f /usr/local/bin/{ccmake,cmake,ctest,cpack}
-    sudo rm -f /usr/local/share/vim/vimfiles/indent/cmake.vim
-    sudo rm -f /usr/local/share/vim/vimfiles/syntax/cmake.vim
-    sudo rm -f /usr/local/share/emacs/site-lisp/cmake-mode.el
-    sudo rm -f /usr/local/share/aclocal/cmake.m4
-    sudo rm -f /usr/local/share/bash-completion/completions/{cmake,cpack,ctest}
+	rm -rf /usr/local/share/cmake* /usr/local/doc/cmake*
+    	rm -f /usr/local/bin/{ccmake,cmake,ctest,cpack}
+    	rm -f /usr/local/share/vim/vimfiles/indent/cmake.vim
+    	rm -f /usr/local/share/vim/vimfiles/syntax/cmake.vim
+    	rm -f /usr/local/share/emacs/site-lisp/cmake-mode.el
+    	rm -f /usr/local/share/aclocal/cmake.m4
+    	rm -f /usr/local/share/bash-completion/completions/{cmake,cpack,ctest}
 }

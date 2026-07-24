@@ -5,19 +5,20 @@ VERSION="latest"
 DESCRIPTION="A maintained, feature-rich and performance oriented, neofetch like system information tool."
 SOURCE="https://github.com/$NAME-cli/$NAME"
 DEPENDENCIES=(
-    "cmake"
+	"cmake"
+    	"gcc"
+    	"git"
 )
 
 function install(){
-    [[ ! $(command -v ${DEPENDENCIES[0]}) ]] && printf "exit\n" && exit
-    git clone $SOURCE /tmp/maya/$NAME
-    (
-        cd /tmp/maya/$NAME
-        ./run.sh
-        sudo cp $(pwd)/build/$NAME /usr/bin/$NAME
-    )
+	git clone $SOURCE /tmp/maya/$NAME
+    	(
+        	cd /tmp/maya/$NAME
+        	./run.sh
+        	/usr/bin/install /tmp/maya/$NAME/build/$NAME /usr/local/bin/$NAME
+    	)
 }
 
 function remove(){
-    sudo rm -f /usr/bin/$NAME
+	rm -f /usr/bin/$NAME
 }

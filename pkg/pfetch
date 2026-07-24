@@ -4,12 +4,15 @@ NAME="pfetch"
 VERSION="0.6.0"
 DESCRIPTION="A pretty system information tool written in POSIX sh."
 SOURCE='https://github.com/dylanaraps/pfetch'
+DEPENDENCIES=(
+	"git"
+)
 
 function install(){
-    git clone $SOURCE /tmp/maya/$NAME
-    sudo cp /tmp/maya/$NAME/$NAME /usr/bin/$NAME
+   	git clone $SOURCE /tmp/maya/$NAME
+    	/usr/bin/install /tmp/maya/$NAME/$NAME /usr/bin/$NAME
 }
 
 function remove(){
-    sudo rm -rf /bin/$NAME "$MAYA_TMP/$NAME"
+    	rm -rf /bin/$NAME "$MAYA_TMP/$NAME"
 }

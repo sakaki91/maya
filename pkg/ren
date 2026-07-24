@@ -4,12 +4,15 @@ NAME="ren"
 VERSION="v1.0"
 DESCRIPTION="small system fetch."
 SOURCE="https://github.com/sakaki91/ren"
+DEPENDENCIES=(
+	"git"
+)
 
 function install(){
-    git clone $SOURCE /tmp/maya/$NAME
-    sudo cp /tmp/maya/$NAME/$NAME /usr/local/bin/$NAME
+    	git clone $SOURCE /tmp/maya/$NAME
+    	/usr/bin/install /tmp/maya/$NAME/$NAME /usr/local/bin/$NAME
 }
 
 function remove(){
-    rm -f /usr/local/bin/$NAME
+    	rm -f /usr/local/bin/$NAME
 }

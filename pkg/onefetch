@@ -5,17 +5,17 @@ VERSION="2.27.1"
 DESCRIPTION="Command-line Git information tool."
 SOURCE="https://github.com/o2sh/$NAME/releases/download/$VERSION/$NAME-linux.tar.gz"
 DEPENDENCIES=(
-    "wget"
-    "tar"
+    	"wget"
+    	"tar"
 )
 
 function install(){
-    wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
-    tar -xvf /tmp/maya/$NAME/$NAME-linux.tar.gz --directory=/tmp/maya/$NAME
-    sudo cp /tmp/maya/$NAME/$NAME /usr/bin/$NAME
+    	wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
+    	tar -xvf /tmp/maya/$NAME/$NAME-linux.tar.gz --directory=/tmp/maya/$NAME
+    	/usr/bin/install /tmp/maya/$NAME/$NAME /usr/bin/$NAME
 }
 
 function remove(){
-    sudo rm -f /usr/bin/$NAME
+    	rm -f /usr/bin/$NAME
 }
 

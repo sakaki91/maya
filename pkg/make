@@ -5,57 +5,28 @@ VERSION="4.4.1"
 DESCRIPTION="GNU make source code."
 SOURCE="https://ftp.gnu.org/gnu/$NAME/$NAME-$VERSION.tar.gz"
 DEPENDENCIES=(
-    "wget"
-    "tar"
-    "gcc"
+	"wget"
+    	"tar"
+    	"gcc"
 )
 
 function install(){
-    wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
-    tar -xvf /tmp/maya/$NAME/$NAME-$VERSION.tar.gz --directory=/tmp/maya/$NAME
-    (
-        cd /tmp/maya/$NAME/$NAME-$VERSION
-        sudo ./configure --disable-dependency-tracking
-        sudo ./build.sh
-        sudo ./make
-        sudo ./make install
-    )
+	wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
+    	tar -xvf /tmp/maya/$NAME/$NAME-$VERSION.tar.gz --directory=/tmp/maya/$NAME
+    	(
+        	cd /tmp/maya/$NAME/$NAME-$VERSION
+	        ./configure --disable-dependency-tracking
+        	./build.sh
+	        ./make
+        	./make install
+	)
 }
 
 function remove(){
-    LOCALE="/usr/local/share/locale"
-    sudo rm -f /usr/local/bin/make
-    sudo rm -f /usr/local/include/gnumake.h
-    sudo rm -f /usr/local/share/man/man1/make.1
-    sudo rm -f /usr/local/share/info/{make.info,make.info-1,make.info-2,make.info-3}
-    sudo rm -rf $LOCALE/be/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/bg/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/cs/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/da/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/de/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/es/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/fi/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/fr/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/ga/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/gl/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/he/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/hr/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/id/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/it/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/ja/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/ko/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/lt/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/nl/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/pl/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/pt/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/pt_BR/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/ro/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/ru/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/sr/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/sv/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/tr/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/uk/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/vi/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/zh_CN/LC_MESSAGES/make.mo
-    sudo rm -rf $LOCALE/zh_TW/LC_MESSAGES/make.mo
+	LOCALE="/usr/local/share/locale"
+	rm -f /usr/local/bin/make
+    	rm -f /usr/local/include/gnumake.h
+    	rm -f /usr/local/share/man/man1/make.1
+    	rm -f /usr/local/share/info/{make.info,make.info-1,make.info-2,make.info-3}
+    	rm -rf $LOCALE/*/LC_MESSAGES/make.mo
 }
