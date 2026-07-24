@@ -2,7 +2,7 @@
 
 # Written by @sakaki91, heavily inspired by Ports.
 
-MAYA_VERSION=1.1
+MAYA_VERSION=1.2
 MAYA_TREE=/usr/local/share/maya
 
 function rootCheck(){
@@ -50,7 +50,7 @@ case $1 in
 	"--clean"|"-cl") rootCheck && rm -rf /tmp/maya ;;
 	"--sync-maya"|"-sy")
 		rootCheck
-		[[ -f /tmp/maya/maya.source ]] && rm -f /tmp/maya/maya.source
+		[[ -d /tmp/maya/maya.source ]] && rm -rf /tmp/maya/maya.source
 		git clone https://github.com/sakaki91/maya /tmp/maya/maya.source
 		/usr/bin/install /tmp/maya/maya.source/maya /usr/local/bin/maya
 		/usr/bin/install /tmp/maya/maya.source/{README,LICENSE} /usr/local/share/maya/doc
