@@ -1,0 +1,25 @@
+#!/bin/bash
+
+NAME="peaclock"
+VERSION="latest"
+DESCRIPTION="A responsive and customizable clock, timer, and stopwatch for the terminal."
+SOURCE="https://github.com/octobanana/peaclock"
+DEPENDENCIES=(
+    "gcc"
+    "cmake"
+)
+
+function install(){
+	git clone $SOURCE /tmp/maya/$NAME
+    (
+        cd /tmp/maya/$NAME
+        ./RUNME.sh build
+        ./RUNME.sh install
+    )
+}
+
+function remove(){
+    rm -f /usr/local/bin/peaclock
+}
+
+
