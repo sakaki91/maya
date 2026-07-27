@@ -1,0 +1,32 @@
+#!/bin/bash
+
+NAME="bzip3"
+VERSION="latest"
+DESCRIPTION="A better and stronger spiritual successor to BZip2."
+SOURCE="https://github.com/iczelia/$NAME"
+DEPENDENCIES=(
+    "git"
+    "make"
+    "automake"
+    "autoconf"
+    "gcc"
+)
+
+function install(){
+	git clone $SOURCE /tmp/maya/$NAME
+    (
+        cd /tmp/maya/$NAME
+        chmod +x bootstrap.sh && ./bootstrap.sh
+        ./configure
+        make
+        make install
+    )
+}
+
+function remove(){
+    rm -f /usr/local/bin/{bzip3,bz3cat,bz3more,bz3less,bz3most,bz3grep,bunzip3}
+    rm -f /usr/local/lib/{libbzip3.la,libbzip3.so.1.0.0,libbzip3.so.1,libbzip3.so,libbzip3.a}
+    rm -f /usr/local/lib/pkgconfig/bzip3.pc
+    rm -f /usr/local/include/libbz3.h
+    rm -f /usr/local/man/man1/{bzip3.1,bz3cat.1,bz3more.1,bz3less.1,bz3most.1,bz3grep.1,bunzip3.1}
+}
