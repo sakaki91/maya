@@ -1,0 +1,20 @@
+#!/bin/bash
+
+NAME="GE-Proton"
+VERSION="11-3"
+DESCRIPTION="Compatibility tool for Steam Play based on Wine and additional components."
+SOURCE="https://github.com/GloriousEggroll/proton-ge-custom/releases/download/$NAME$VERSION/$NAME$VERSION.tar.gz"
+DEPENDENCIES=(
+    "wget"
+    "tar"
+)
+
+function install(){
+    wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
+    tar -xvf /tmp/maya/$NAME/$NAME$VERSION.tar.gz --directory=/tmp/maya/$NAME
+    printf "\n\e[1mGE-Proton\e[0m downloaded to: \e[1m/tmp/maya/$NAME/$NAME-$VERSION\e[0m\n\e[0;92menjoy!\e[0m\n\n"
+}
+
+function remove(){
+    rm -rf /tmp/maya/$NAME
+}

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+NAME="dxvk"
+VERSION="3.0.2"
+DESCRIPTION="Vulkan-based implementation of D3D8, 9, 10 and 11 for Linux / Wine."
+SOURCE="https://github.com/doitsujin/dxvk/releases/download/v$VERSION/$NAME-$VERSION.tar.gz"
+DEPENDENCIES=(
+    "wget"
+    "tar"
+)
+
+function install(){
+	wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
+    tar -xvf /tmp/maya/$NAME/$NAME-$VERSION.tar.gz --directory=/tmp/maya/$NAME
+    printf "\n\e[1mDXVK\e[0m downloaded to: \e[1m/tmp/maya/$NAME/$NAME-$VERSION\e[0m\n(x32/syswow64), (x64/system32)\n\e[0;92menjoy!\e[0m\n\n"
+}
+
+function remove(){
+    rm -rf /tmp/maya/$NAME
+}
