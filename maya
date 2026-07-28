@@ -4,7 +4,7 @@
 # Copyright (C) by Sakaki, 2025.
 # License: GNU General Public License version 3 <https://www.gnu.org/licenses/gpl-3.0.en.html>
 
-MAYA_VERSION=1.4
+MAYA_VERSION=1.4-1
 MAYA_TREE=/usr/local/share/maya
 
 function rootCheck(){
@@ -51,7 +51,7 @@ case $1 in
 	"--sync-maya"|"-sy")
 		rootCheck
 		[[ -d /tmp/maya/maya.source ]] && rm -rf /tmp/maya/maya.source ;
-		git clone https://github.com/sakaki91/maya /tmp/maya/maya.source ; /tmp/maya/maya.source/install.sh
+		git clone https://github.com/sakaki91/maya /tmp/maya/maya.source ; /usr/bin/install /tmp/maya/maya.source/maya /usr/local/bin/maya ; /usr/bin/install /tmp/maya/maya.source/{README,LICENSE} /usr/local/share/maya/doc/ ; cp -r /tmp/maya/maya.source/{pkg,src} /usr/local/share/maya
 	;;
     "--install"|"-in")
 		binaryExCheck "$2"
