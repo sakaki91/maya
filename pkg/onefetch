@@ -1,21 +1,23 @@
 #!/bin/bash
 
 NAME="onefetch"
-VERSION="2.27.1"
+VERSION="git"
 DESCRIPTION="Command-line Git information tool."
-SOURCE="https://github.com/o2sh/$NAME/releases/download/$VERSION/$NAME-linux.tar.gz"
+SOURCE="https://github.com/o2sh/onefetch"
 DEPENDENCIES=(
-    "wget"
-    "tar"
+    "git"
+    "cargo"
 )
 
 function install(){
-    wget -c $SOURCE --directory-prefix=/tmp/maya/$NAME
-    tar -xvf /tmp/maya/$NAME/$NAME-linux.tar.gz --directory=/tmp/maya/$NAME
-    /usr/bin/install /tmp/maya/$NAME/$NAME /usr/bin/$NAME
+    git clone $SOURCE /tmp/maya/$NAME
+    (
+        cd /tmp/maya/$NAME
+        cargo build --release --features=fail-on-deprecated
+        /usr/bin/install /tmp/maya/$NAME/target/release/onefetch /usr/local/bin/$NAME
+    )
 }
 
 function remove(){
-    rm -f /usr/bin/$NAME
+    rm -f /usr/local/bin/$NAME
 }
-

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-[[ $1 == "--help" || $1 == "-h" ]] && printf "You need \e[1mEUID 0\e[0m (current EUID: \e[0;91m$(echo $EUID)\e[0m) to run the installation script.\n\n" && printf "%-20s %0s\n%-20s %0s\n%-20s %0s\n" "--help" ":: show this message." "./install" ":: installs maya" "./install --remove" ":: remove maya" && exit
-
 [[ $EUID != 0 ]] && printf "\e[0;91merror:\e[0m you can't run this without root access.\n" && exit
 
 MAYA_BIN="/usr/local/bin"
@@ -15,10 +13,8 @@ if [[ $1 == "--remove" ]]; then
     rm -rf $MAYA_TREE
     exit
 else
-    set -x
     mkdir -p $MAYA_TREE $MAYA_REGISTRY $MAYA_DOC
     /usr/bin/install maya $MAYA_BIN
     /usr/bin/install {README,LICENSE} $MAYA_DOC
     cp -r {pkg,src} $MAYA_TREE
-    set +x
 fi

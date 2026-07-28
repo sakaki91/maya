@@ -43,10 +43,13 @@ case $1 in
     "--version"|"-v") printf "maya $MAYA_VERSION\nCopyright (C) by Sakaki, 2026.\nLicense: GNU General Public License version 3 <https://www.gnu.org/licenses/gpl-3.0.en.html>\n" ;;
     "--about"|"-a") binaryExCheck "$2" ; source "$MAYA_TREE/pkg/$2" ; printf "$NAME-$VERSION: $DESCRIPTION\n" ;;
     "--list"|"-l")
-		[[ -z $2 ]] && printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1)\e[0m\n" && exit
-		[[ ! -z $2 ]] && printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1 | grep $2)\e[0m\n" && exit
+		if [[ -z $2 ]]; then
+			printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1)\e[0m\n"
+		elif [[ ! -z $2 ]]; then
+			printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1 | grep $2)\e[0m\n"
+		fi
 	;;
-	"--list-installed"|"-li") printf "\e[0;92m$(ls $MAYA_TREE/pkg/.info -p -1)\e[0m\n" ;;
+	"--list-installed"|"-li") printf "\e[0;95m$(ls $MAYA_TREE/pkg/.info -p -1)\e[0m\n" ;;
 	"--clean"|"-cl") rootCheck ; rm -rf /tmp/maya ;;
 	"--sync-maya"|"-sy")
 		rootCheck

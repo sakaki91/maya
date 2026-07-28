@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NAME="neofetch"
-VERSION="7.0.1"
+VERSION="git"
 DESCRIPTION="A command-line system information tool written in bash 3.2+"
 SOURCE="https://github.com/dylanaraps/neofetch"
 DEPENDENCIES=(
@@ -10,9 +10,9 @@ DEPENDENCIES=(
 
 function install(){
     git clone $SOURCE /tmp/maya/$NAME
-    /usr/bin/install /tmp/maya/$NAME/$NAME /usr/bin/$NAME
+    /usr/bin/install /tmp/maya/$NAME/$NAME /usr/local/bin/$NAME
 }
 
 function remove(){
-	rm -rf /bin/$NAME "$MAYA_TMP/$NAME"
+	rm -f /usr/local/bin/$NAME
 }

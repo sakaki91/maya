@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NAME="cbonsai"
-VERSION="latest"
+VERSION="git"
 DESCRIPTION="grow bonsai trees in your terminal."
 SOURCE="https://gitlab.com/jallbrit/$NAME"
 DEPENDENCIES=(
@@ -12,7 +12,10 @@ DEPENDENCIES=(
 
 function install(){
     git clone $SOURCE /tmp/maya/$NAME
-    (cd /tmp/maya/$NAME && make install)
+    (
+        cd /tmp/maya/$NAME
+        make install
+    )
 }
 
 function remove(){

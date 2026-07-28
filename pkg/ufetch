@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NAME="ufetch"
-VERSION="latest"
+VERSION="git"
 DESCRIPTION="Tiny system info for Unix-like operating systems."
 SOURCE="https://gitlab.com/jschx/$NAME"
 DEPENDENCIES=(

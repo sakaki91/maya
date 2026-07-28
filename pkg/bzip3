@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NAME="bzip3"
-VERSION="latest"
+VERSION="git"
 DESCRIPTION="A better and stronger spiritual successor to BZip2."
 SOURCE="https://github.com/iczelia/$NAME"
 DEPENDENCIES=(
