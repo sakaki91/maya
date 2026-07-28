@@ -50,7 +50,7 @@ case $1 in
 	"--clean"|"-cl") rootCheck ; rm -rf /tmp/maya ;;
 	"--sync-maya"|"-sy")
 		rootCheck
-		[[ -d /tmp/maya/maya.source ]] && rm -rf /tmp/maya/maya.source ;
+		[[ -d /tmp/maya/maya.source ]] && rm -rf /tmp/maya/maya.source
 		git clone https://github.com/sakaki91/maya /tmp/maya/maya.source ; /usr/bin/install /tmp/maya/maya.source/maya /usr/local/bin/maya ; /usr/bin/install /tmp/maya/maya.source/{README,LICENSE} /usr/local/share/maya/doc/ ; cp -r /tmp/maya/maya.source/{pkg,src} /usr/local/share/maya
 	;;
     "--install"|"-in")
