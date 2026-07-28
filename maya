@@ -1,8 +1,10 @@
 #!/bin/bash
 
-# Written by @sakaki91, heavily inspired by Ports.
+# Written from scratch by @sakaki91, with a premise inspired by Ports.
+# Copyright (C) by Sakaki, 2025.
+# License: GNU General Public License version 3 <https://www.gnu.org/licenses/gpl-3.0.en.html>
 
-MAYA_VERSION=1.3
+MAYA_VERSION=1.4
 MAYA_TREE=/usr/local/share/maya
 
 function rootCheck(){
@@ -26,49 +28,46 @@ function binaryExCheck(){
 
 case $1 in
 	"--help"|"-h")
-		printf "\e[1moperations:\e[0m\n%-25s %0s\n" " -h  | --help" ":: show this message."
-	    printf "%-25s %0s\n" " -v  | --version" ":: shows the version."
-        printf "%-25s %0s\n" " -a  | --about" ":: view the metadata (version, name, and description) of a package."
-	    printf "%-25s %0s\n" " -l  | --list" ":: shows all binaries available for installation."
-        printf "%-25s %0s\n" " -li | --list-installed" ":: it shows everything that maya has installed."
-	    printf "%-25s %0s\n" " -cl | --clean" ":: clears the /tmp/maya directory."
-        printf "%-25s %0s\n" " -sy | --sync-maya" ":: update maya and recipes by pulling directly from the git."
-	    printf "%-25s %0s\n" " -in | --install" ":: install a binary."
-        printf "%-25s %0s\n\n" " -rm | --remove" ":: remove a binary."
-	    printf "\e[1musage: maya 'operation' [...]\e[0m\n"
+		printf "\e[1musage: maya 'operation' [...]\n\e[4moperations:\e[0m\n" 
+		printf "%-23s %0s\n" " -h, --help" ": show this message."
+	    printf "%-23s %0s\n" " -v, --version" ": shows the version."
+        printf "%-23s %0s\n" " -a, --about" ": view the metadata (version, name, and description) of a package."
+	    printf "%-23s %0s\n" " -l, --list" ": shows all binaries available for installation."
+        printf "%-23s %0s\n" " -li, --list-installed" ": it shows everything that maya has installed."
+	    printf "%-23s %0s\n" " -cl, --clean" ": clears the /tmp/maya directory."
+        printf "%-23s %0s\n" " -sy, --sync-maya" ": update maya and recipes by pulling directly from the git."
+	    printf "%-23s %0s\n" " -in, --install" ": install a binary."
+        printf "%-23s %0s\n" " -rm, --remove" ": remove a binary."
+	    printf "\n\e[1mReport bugs to: https://github.com/sakaki91/maya\e[0m\n"
     ;;
-    "--version"|"-v") printf "maya-$MAYA_VERSION\n" ;;
-    "--about"|"-a") 
-     	binaryExCheck "$2"
-	    source "$MAYA_TREE/pkg/$2" && printf "\e[1m%-25s\e[0m %10s\n" "$NAME :: $VERSION" "$DESCRIPTION"
-    ;;
-    "--list"|"-l") 
-	   	[[ -z $2 ]] && printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1 | grep -v /)\e[0m\n" && exit
-	   	[[ ! -z $2 ]] && printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1 | grep -v / | grep $2)\e[0m\n" && exit
+    "--version"|"-v") printf "maya $MAYA_VERSION\nCopyright (C) by Sakaki, 2025.\nLicense: GNU General Public License version 3 <https://www.gnu.org/licenses/gpl-3.0.en.html>\n" ;;
+    "--about"|"-a") binaryExCheck "$2" ; source "$MAYA_TREE/pkg/$2" ; printf "$NAME-$VERSION: $DESCRIPTION\n" ;;
+    "--list"|"-l")
+		[[ -z $2 ]] && printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1)\e[0m\n" && exit
+		[[ ! -z $2 ]] && printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1 | grep $2)\e[0m\n" && exit
 	;;
-	"--list-installed"|"-li") printf "\e[0;92m$(ls $MAYA_TREE/pkg/info -p -1)\e[0m\n" ;;
-	"--clean"|"-cl") 
-		rootCheck
-		rm -rf /tmp/maya
-	;;
+	"--list-installed"|"-li") printf "\e[0;92m$(ls $MAYA_TREE/pkg/.info -p -1)\e[0m\n" ;;
+	"--clean"|"-cl") rootCheck ; rm -rf /tmp/maya ;;
 	"--sync-maya"|"-sy")
 		rootCheck
-		[[ -d /tmp/maya/maya.source ]] && rm -rf /tmp/maya/maya.source
-		git clone https://github.com/sakaki91/maya /tmp/maya/maya.source
-		/usr/bin/install /tmp/maya/maya.source/maya /usr/local/bin/maya
-		/usr/bin/install /tmp/maya/maya.source/{README,LICENSE} /usr/local/share/maya/doc
-		cp -r /tmp/maya/maya.source/{pkg,src} /usr/local/share/maya/
-    ;;
+		[[ -d /tmp/maya/maya.source ]] && rm -rf /tmp/maya/maya.source ;
+		git clone https://github.com/sakaki91/maya /tmp/maya/maya.source ; /tmp/maya/maya.source/install.sh
+	;;
     "--install"|"-in")
-       	binaryExCheck "$2"
+		binaryExCheck "$2"
 		rootCheck
-		mkdir -p /tmp/maya && source "$MAYA_TREE/pkg/$2"
-		dependencieCheck && install && touch "$MAYA_TREE/pkg/info/$NAME"
-    ;;
+		mkdir -p /tmp/maya
+		source "$MAYA_TREE/pkg/$2"
+		dependencieCheck
+		install
+		touch "$MAYA_TREE/pkg/.info/$NAME"
+	;;
     "--remove"|"-rm")
 		binaryExCheck "$2"
 		rootCheck
-       	source "$MAYA_TREE/pkg/$2" && remove && rm -f "$MAYA_TREE/pkg/info/$NAME"
-    ;;
+		source "$MAYA_TREE/pkg/$2"
+		remove
+		rm -f "$MAYA_TREE/pkg/.info/$NAME"
+	;;
     *) printf "\e[0;91merror:\e[0m -h for help\n" ;;
 esac
