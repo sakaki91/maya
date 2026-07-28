@@ -6,7 +6,7 @@
 
 MAYA_BIN="/usr/local/bin"
 MAYA_TREE="/usr/local/share/maya"
-MAYA_REGISTRY="$MAYA_TREE/pkg/info"
+MAYA_REGISTRY="$MAYA_TREE/pkg/.info"
 MAYA_DOC="$MAYA_TREE/doc"
   
 if [[ $1 == "--remove" ]]; then
@@ -21,6 +21,4 @@ else
     /usr/bin/install {README,LICENSE} $MAYA_DOC
     cp -r {pkg,src} $MAYA_TREE
     set +x
-    printf "\n\e[4m\e[1m%-51s\e[0m\n" "PATH:" && printf "\e[1m%-30s\e[0m%-0s\n" "Binary:" "$MAYA_BIN/maya" 
-    printf "\e[1m%-30s\e[0m%-0s\n\n" "Documentation and PKG's:" "$MAYA_TREE"
 fi
