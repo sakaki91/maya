@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Written from scratch by @sakaki91, with a premise inspired by Ports.
-# Copyright (C) by Sakaki, 2025.
+# Copyright (C) by Sakaki, 2026.
 # License: GNU General Public License version 3 <https://www.gnu.org/licenses/gpl-3.0.en.html>
 
 MAYA_VERSION=1.4-1
@@ -40,7 +40,7 @@ case $1 in
         printf "%-23s %0s\n" " -rm, --remove" ": remove a binary."
 	    printf "\n\e[1mReport bugs to: https://github.com/sakaki91/maya\e[0m\n"
     ;;
-    "--version"|"-v") printf "maya $MAYA_VERSION\nCopyright (C) by Sakaki, 2025.\nLicense: GNU General Public License version 3 <https://www.gnu.org/licenses/gpl-3.0.en.html>\n" ;;
+    "--version"|"-v") printf "maya $MAYA_VERSION\nCopyright (C) by Sakaki, 2026.\nLicense: GNU General Public License version 3 <https://www.gnu.org/licenses/gpl-3.0.en.html>\n" ;;
     "--about"|"-a") binaryExCheck "$2" ; source "$MAYA_TREE/pkg/$2" ; printf "$NAME-$VERSION: $DESCRIPTION\n" ;;
     "--list"|"-l")
 		[[ -z $2 ]] && printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1)\e[0m\n" && exit
