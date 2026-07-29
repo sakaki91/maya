@@ -1,29 +1,29 @@
 #!/bin/bash
 
-# Written from scratch by @sakaki91, with a premise inspired by Ports.
+# Written from scratch by @sakaki91 using VIM, with a premise similar to Ports.
 # Copyright (C) by Sakaki, 2026.
 # License: GNU General Public License version 3 <https://www.gnu.org/licenses/gpl-3.0.en.html>
 
-MAYA_VERSION=1.4-1
+MAYA_VERSION=1.5
 MAYA_TREE=/usr/local/share/maya
 
 function rootCheck(){
 	[[ $EUID != 0 ]] && printf "\e[0;91merror:\e[0m you can't run this without root access.\n" && exit
 }
 
+function binaryExCheck(){
+	[[ -z $1 ]] && printf "\e[0;91merror:\e[0m empty value.\n" && exit
+	[[ ! -f "$MAYA_TREE/pkg/$1" ]] && printf "\e[0;91merror:\e[0m the package does not exist.\n" && exit
+}
+
 function dependencieCheck(){
 	if [[ ! -z $DEPENDENCIES ]]; then
         for dep in "${DEPENDENCIES[@]}"; do
-	    	if ! command -v "$dep" >/dev/null 2>&1; then
+	    	if ! command -v "$dep" &>> /dev/null; then
         	    printf "\e[0;91merror:\033[0m $dep is not installed.\n" && exit
 	        fi
         done
     fi
-}
-
-function binaryExCheck(){
-	[[ -z $1 ]] && printf "\e[0;91merror:\e[0m empty value.\n" && exit
-	[[ ! -f "$MAYA_TREE/pkg/$1" ]] && printf "\e[0;91merror:\e[0m the package does not exist.\n" && exit
 }
 
 case $1 in
@@ -35,7 +35,7 @@ case $1 in
 	    printf "%-23s %0s\n" " -l, --list" ": shows all binaries available for installation."
         printf "%-23s %0s\n" " -li, --list-installed" ": it shows everything that maya has installed."
 	    printf "%-23s %0s\n" " -cl, --clean" ": clears the /tmp/maya directory."
-        printf "%-23s %0s\n" " -sy, --sync-maya" ": update maya and recipes by pulling directly from the git."
+        printf "%-23s %0s\n" " -sy, --sync" ": it synchronizes Maya, recipes, and checks for package updates."
 	    printf "%-23s %0s\n" " -in, --install" ": install a binary."
         printf "%-23s %0s\n" " -rm, --remove" ": remove a binary."
 	    printf "\n\e[1mReport bugs to: https://github.com/sakaki91/maya\e[0m\n"
@@ -45,32 +45,51 @@ case $1 in
     "--list"|"-l")
 		if [[ -z $2 ]]; then
 			printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1)\e[0m\n"
-		elif [[ ! -z $2 ]]; then
+        else
 			printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1 | grep $2)\e[0m\n"
 		fi
 	;;
 	"--list-installed"|"-li") printf "\e[0;95m$(ls $MAYA_TREE/pkg/.info -p -1)\e[0m\n" ;;
 	"--clean"|"-cl") rootCheck ; rm -rf /tmp/maya ;;
-	"--sync-maya"|"-sy")
-		rootCheck
-		[[ -d /tmp/maya/maya.source ]] && rm -rf /tmp/maya/maya.source
-		git clone https://github.com/sakaki91/maya /tmp/maya/maya.source ; /usr/bin/install /tmp/maya/maya.source/maya /usr/local/bin/maya ; /usr/bin/install /tmp/maya/maya.source/{README,LICENSE} /usr/local/share/maya/doc/ ; cp -r /tmp/maya/maya.source/{pkg,src} /usr/local/share/maya
+	"--sync"|"-sy")
+        rootCheck
+        git clone https://github.com/sakaki91/maya /tmp/maya/maya.source
+        /usr/bin/install /tmp/maya/maya.source/maya /usr/local/bin/maya ; /usr/bin/install /tmp/maya/maya.source/{README,LICENSE} /usr/local/share/maya/doc/
+        cp -r /tmp/maya/maya.source/{pkg,src} /usr/local/share/maya/
+        if [[ $2 == "all" ]]; then
+            printf "\e[0;93mWARNING!\e[0m This will update all packages directly from their sources \e[1m(even if there are no updates)\e[0m.\nwould you like to continue? \e[1m(this may take some time)\e[0m\n"
+            read -p "[Y/n] " input
+            if [[ $input == "Y" || $input == "y" ]]; then
+                for installedpkg in /usr/local/share/maya/pkg/.info/*; do
+                    INSTALLED_PKG_FILTERED="$(basename $installedpkg)"
+                    printf "$INSTALLED_PKG_FILTERED\n" ; source /usr/local/share/maya/pkg/$INSTALLED_PKG_FILTERED
+                    dependencieCheck ; install ; echo "INSTALLED_VERSION=$VERSION" > "$MAYA_TREE/pkg/.info/$NAME"
+                done
+            elif [[ $input == "N" || $input == "n" ]]; then
+                printf "\e[0;92mok:\e[0m canceled by the operator.\n"    
+            fi
+        else
+		    binaryExCheck "$2"
+		    if [[ ! $(command -v $2) ]]; then
+			    printf "\e[0;91merror:\e[0m package not installed.\n"
+		    else
+			    source "$MAYA_TREE/pkg/$2" ; source "$MAYA_TREE/pkg/.info/$2"
+			    if [[ $VERSION != $INSTALLED_VERSION || $INSTALLED_VERSION == "git" ]]; then
+				    dependencieCheck ; install ; echo "INSTALLED_VERSION=$VERSION" > "$MAYA_TREE/pkg/.info/$NAME"
+			    else
+				    printf "\e[0;92mok:\e[0m the latest version is installed.\n"
+			    fi
+            fi
+		fi
 	;;
     "--install"|"-in")
-		binaryExCheck "$2"
-		rootCheck
-		mkdir -p /tmp/maya
-		source "$MAYA_TREE/pkg/$2"
-		dependencieCheck
-		install
-		touch "$MAYA_TREE/pkg/.info/$NAME"
+		binaryExCheck "$2" ; rootCheck
+		mkdir -p /tmp/maya ; source "$MAYA_TREE/pkg/$2"
+		dependencieCheck ; install ; echo "INSTALLED_VERSION=$VERSION" > "$MAYA_TREE/pkg/.info/$NAME"
 	;;
     "--remove"|"-rm")
-		binaryExCheck "$2"
-		rootCheck
-		source "$MAYA_TREE/pkg/$2"
-		remove
-		rm -f "$MAYA_TREE/pkg/.info/$NAME"
+		binaryExCheck "$2" ; rootCheck
+		source "$MAYA_TREE/pkg/$2" ; remove ; rm -f "$MAYA_TREE/pkg/.info/$NAME"
 	;;
     *) printf "\e[0;91merror:\e[0m -h for help\n" ;;
 esac
