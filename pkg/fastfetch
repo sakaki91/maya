@@ -20,5 +20,5 @@ function install(){
 }
 
 function remove(){
-	rm -f /usr/bin/$NAME
+	rm -f /usr/local/bin/$NAME
 }
