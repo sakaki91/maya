@@ -4,7 +4,7 @@
 # Copyright (C) by Sakaki, 2026.
 # License: GNU General Public License version 3 <https://www.gnu.org/licenses/gpl-3.0.en.html>
 
-MAYA_VERSION=1.8
+MAYA_VERSION=1.9
 MAYA_TREE=/usr/local/share/maya
 
 function rootCheck(){
@@ -48,7 +48,8 @@ case $1 in
         printf "\e[2m%-35s\e[0m %0s\n" "      --sync <package>" "this synchronizes a specific package."
         printf "%-35s %0s\n" " -in, --install" "install a binary."
         printf "%-35s %0s\n" " -rm, --remove" "remove a binary."
-	    printf "\n\e[1mReport bugs to: https://github.com/sakaki91/maya\e[0m\n\n"
+        printf "%-35s %0s\n" " -rs, --register-sync" "it scans installed packages for orphaned packages/records."
+        printf "\n\e[1mReport bugs to: https://github.com/sakaki91/maya\e[0m\n\n"
     ;;
     "--version"|"-v") printf "maya $MAYA_VERSION\nCopyright (C) by Sakaki, 2026.\nLicense: GNU General Public License version 3 <https://www.gnu.org/licenses/gpl-3.0.en.html>\n" ;;
     "--about"|"-a") binaryExCheck "$2" ; source "$MAYA_TREE/pkg/$2" ; printf "$NAME-$VERSION: $DESCRIPTION\n" ;;
@@ -109,6 +110,17 @@ case $1 in
                 rm -f $MAYA_TREE/pkg/.info/$2
             fi
         fi  
+    ;;
+    "--register-sync"|"-rs")
+        for registerInfo in $MAYA_TREE/pkg/.info/*; do
+            PRESENT_BINARY=$(basename $registerInfo)
+            if ! command -v $PRESENT_BINARY &>> /dev/null; then
+                printf "\e[0;91morphan package:\e[0m $PRESENT_BINARY.\n"
+            fi
+            if command -v $PRESENT_BINARY &>> /dev/null; then
+                printf "\e[0;92mok:\e[0m $PRESENT_BINARY.\n"
+            fi
+        done
     ;;
     *) printf "\e[0;91merror:\e[0m -h for help\n" ;;
 esac
