@@ -9,6 +9,8 @@ DEPENDENCIES=(
     "make"
     "automake"
     "autoconf"
+    "libtool"
+    "pkgconf"
     "gcc"
 )
 
