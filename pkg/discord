@@ -20,7 +20,7 @@ function install(){
 }
 
 function remove(){
-    rm -f /usr/bin/discord
-    rm -f /usr/share/applications/discord.desktop
+    rm -f /usr/local/bin/discord
+    rm -f /usr/local/share/applications/discord.desktop
     rm -f /usr/local/share/icons/hicolor/scalable/apps/discord.png
 }
