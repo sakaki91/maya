@@ -8,14 +8,18 @@ DEPENDENCIES=(
 	"cmake"
     "gcc"
     "git"
+    "opencl-headers"
 )
 
 function install(){
 	git clone $SOURCE /tmp/maya/$NAME
     (
        	cd /tmp/maya/$NAME
-       	./run.sh
-       	/usr/bin/install /tmp/maya/$NAME/build/$NAME /usr/local/bin/$NAME
+       	mkdir -p build
+        cd build
+        cmake ..
+        cmake --build . --target fastfetch
+    	/usr/bin/install /tmp/maya/$NAME/build/$NAME /usr/local/bin/$NAME
     )
 }
 
