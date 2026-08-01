@@ -4,6 +4,7 @@ NAME="peaclock"
 VERSION="git"
 DESCRIPTION="A responsive and customizable clock, timer, and stopwatch for the terminal."
 SOURCE="https://github.com/octobanana/peaclock"
+TYPE="system"
 DEPENDENCIES=(
     "gcc"
     "cmake"

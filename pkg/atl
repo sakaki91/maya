@@ -4,6 +4,7 @@ NAME="atl"
 VERSION="git"
 DESCRIPTION="small system fetch."
 SOURCE="https://github.com/sakaki91/about-this-linux"
+TYPE="system"
 DEPENDENCIES=(
 	"git"
 )

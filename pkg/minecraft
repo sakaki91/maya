@@ -4,6 +4,7 @@ NAME="minecraft"
 VERSION="tarball"
 DESCRIPTION="Minecraft Java (Official Launcher)"
 SOURCE="https://launcher.mojang.com/download/Minecraft.tar.gz"
+TYPE="games"
 DEPENDENCIES=(
 	"wget"
 	"tar"

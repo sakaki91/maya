@@ -4,6 +4,7 @@ NAME="dxvk"
 VERSION="3.0.2"
 DESCRIPTION="Vulkan-based implementation of D3D8, 9, 10 and 11 for Linux / Wine."
 SOURCE="https://github.com/doitsujin/dxvk/releases/download/v$VERSION/$NAME-$VERSION.tar.gz"
+TYPE="system"
 DEPENDENCIES=(
     "wget"
     "tar"

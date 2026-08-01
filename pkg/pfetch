@@ -4,6 +4,7 @@ NAME="pfetch"
 VERSION="git"
 DESCRIPTION="A pretty system information tool written in POSIX sh."
 SOURCE='https://github.com/dylanaraps/pfetch'
+TYPE="system"
 DEPENDENCIES=(
 	"git"
 )

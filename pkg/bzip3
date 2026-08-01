@@ -4,6 +4,7 @@ NAME="bzip3"
 VERSION="git"
 DESCRIPTION="A better and stronger spiritual successor to BZip2."
 SOURCE="https://github.com/iczelia/$NAME"
+TYPE="system"
 DEPENDENCIES=(
     "git"
     "make"

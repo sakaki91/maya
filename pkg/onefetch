@@ -4,6 +4,7 @@ NAME="onefetch"
 VERSION="git"
 DESCRIPTION="Command-line Git information tool."
 SOURCE="https://github.com/o2sh/onefetch"
+TYPE="system"
 DEPENDENCIES=(
     "git"
     "cargo"

@@ -4,6 +4,7 @@ NAME="cbonsai"
 VERSION="git"
 DESCRIPTION="grow bonsai trees in your terminal."
 SOURCE="https://gitlab.com/jallbrit/$NAME"
+TYPE="system"
 DEPENDENCIES=(
 	"gcc"
 	"make"

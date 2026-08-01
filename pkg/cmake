@@ -4,6 +4,7 @@ NAME="cmake"
 VERSION="git"
 DESCRIPTION="CMake, the cross-platform, open-source build system."
 SOURCE="https://github.com/kitware/cmake"
+TYPE="development"
 DEPENDENCIES=(
     "git"
     #"gcc"

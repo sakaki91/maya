@@ -4,7 +4,7 @@
 # Copyright (C) by Sakaki, 2026.
 # License: GNU General Public License version 3 <https://www.gnu.org/licenses/gpl-3.0.en.html>
 
-MAYA_VERSION=1.9
+MAYA_VERSION=2.0
 MAYA_TREE=/usr/local/share/maya
 
 function rootCheck(){
@@ -38,7 +38,8 @@ case $1 in
 		printf "\e[1musage: maya 'operation' [...]\n\e[4moperations:\e[0m\n" 
 		printf "%-20s %0s\n" " -h, --help" "show this message."
 	    printf "%-20s %0s\n\n" " -v, --version" "shows the version."
-        printf "%-35s %0s\n" " -a,  --about" "view the metadata (version, name, and description) of a package."
+        printf "%-35s %0s\n" " -a,  --about" "view the metadata (version, name, type, and description) of a package."
+        printf "\e[2m%-35s\e[0m %0s\n" "      --about all" "view the metadata (version, name, type, and description) of all packages."
 	    printf "%-35s %0s\n" " -l,  --list" "shows all available binaries for installation."
         printf "\e[2m%-35s\e[0m %0s\n" "      --list <package>" "filters the available binaries for installation."
         printf "%-35s %0s\n" " -li, --list-installed" "list all installed binaries."
@@ -52,7 +53,20 @@ case $1 in
         printf "\n\e[1mReport bugs to: https://github.com/sakaki91/maya\e[0m\n\n"
     ;;
     "--version"|"-v") printf "maya $MAYA_VERSION\nCopyright (C) by Sakaki, 2026.\nLicense: GNU General Public License version 3 <https://www.gnu.org/licenses/gpl-3.0.en.html>\n" ;;
-    "--about"|"-a") binaryExCheck "$2" ; source "$MAYA_TREE/pkg/$2" ; printf "$NAME-$VERSION: $DESCRIPTION\n" ;;
+    "--about"|"-a")
+        if [[ $2 == "all" ]]; then
+            for aboutallpkg in /usr/local/share/maya/pkg/*; do
+                ALL_PKG="$(basename $aboutallpkg)"
+                source $MAYA_TREE/pkg/$ALL_PKG
+                [[ -z $TYPE ]] && TYPE="unknown"
+                printf "\e[0;95m$TYPE\e[0m/$NAME-$VERSION: $DESCRIPTION\n"
+            done
+        else
+            binaryExCheck "$2"
+            source "$MAYA_TREE/pkg/$2"
+            printf "\e[0;95m$TYPE\e[0m/$NAME-$VERSION: $DESCRIPTION\n"
+        fi
+    ;;
     "--list"|"-l")
 		if [[ -z $2 ]]; then
 			printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1)\e[0m\n"
