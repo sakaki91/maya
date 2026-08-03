@@ -1,0 +1,19 @@
+#!/bin/bash
+
+NAME="ufetch-plus"
+VERSION="git"
+DESCRIPTION="a small system information utility for Linux systems."
+SOURCE="https://github.com/sakaki91/ufetch-plus"
+TYPE="system"
+DEPENDENCIES=(
+	"git"
+)
+
+function install(){
+    git clone $SOURCE /tmp/maya/$NAME
+    /usr/bin/install /tmp/maya/$NAME/ufetch /usr/local/bin/$NAME
+}
+
+function remove(){
+    rm -f /usr/local/bin/ufetch
+}

@@ -4,7 +4,7 @@
 # Copyright (C) by Sakaki, 2026.
 # License: GNU General Public License version 3 <https://www.gnu.org/licenses/gpl-3.0.en.html>
 
-MAYA_VERSION=2.0
+MAYA_VERSION=2.1
 MAYA_TREE=/usr/local/share/maya
 
 function rootCheck(){
@@ -53,28 +53,26 @@ case $1 in
         printf "\n\e[1mReport bugs to: https://github.com/sakaki91/maya\e[0m\n\n"
     ;;
     "--version"|"-v") printf "maya $MAYA_VERSION\nCopyright (C) by Sakaki, 2026.\nLicense: GNU General Public License version 3 <https://www.gnu.org/licenses/gpl-3.0.en.html>\n" ;;
-    "--about"|"-a")
-        if [[ $2 == "all" ]]; then
-            for aboutallpkg in /usr/local/share/maya/pkg/*; do
-                ALL_PKG="$(basename $aboutallpkg)"
-                source $MAYA_TREE/pkg/$ALL_PKG
-                [[ -z $TYPE ]] && TYPE="unknown"
-                printf "\e[0;95m$TYPE\e[0m/$NAME-$VERSION: $DESCRIPTION\n"
+    "--list"|"-l")
+        if [[ -z $2 ]]; then
+            for ALLPACKAGES in /usr/local/share/maya/pkg/*; do
+                ALL_PKG="$(basename $ALLPACKAGES)"
+                . "$MAYA_TREE/pkg/$ALL_PKG"
+                printf "%-15s %0s\n" "$NAME" "$DESCRIPTION"
             done
         else
             binaryExCheck "$2"
-            source "$MAYA_TREE/pkg/$2"
-            printf "\e[0;95m$TYPE\e[0m/$NAME-$VERSION: $DESCRIPTION\n"
+            . "$MAYA_TREE/pkg/$2"
+            printf "%-15s %0s\n" "$NAME" "$DESCRIPTION"
         fi
     ;;
-    "--list"|"-l")
-		if [[ -z $2 ]]; then
-			printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1)\e[0m\n"
-        else
-			printf "\e[0;95m$(ls $MAYA_TREE/pkg -p -1 | grep $2)\e[0m\n"
-		fi
-	;;
-	"--list-installed"|"-li") printf "\e[0;95m$(ls $MAYA_TREE/pkg/.info -p -1)\e[0m\n" ;;
+ 	"--list-installed"|"-li")
+        for INSTALLEDPACKAGES in /usr/local/share/maya/pkg/.info/*; do
+            ALL_IN_PKG="$(basename $INSTALLEDPACKAGES)"
+            . "$MAYA_TREE/pkg/$ALL_IN_PKG"
+            printf "%-15s %0s\n" "$NAME" "$DESCRIPTION"
+        done
+    ;;
 	"--sync"|"-sy")
         rootCheck ; cleaning
         git clone https://github.com/sakaki91/maya /tmp/maya/maya.source
@@ -129,12 +127,12 @@ case $1 in
         for registerInfo in $MAYA_TREE/pkg/.info/*; do
             PRESENT_BINARY=$(basename $registerInfo)
             if ! command -v $PRESENT_BINARY &>> /dev/null; then
-                printf "\e[0;91morphan package:\e[0m $PRESENT_BINARY.\n"
+                printf "%-20s\033[1;91m%0s\033[0m\n" "$PRESENT_BINARY." "[ *orphan package ]" 
             fi
             if command -v $PRESENT_BINARY &>> /dev/null; then
-                printf "\e[0;92mok:\e[0m $PRESENT_BINARY.\n"
+                printf "%-20s\033[1;92m%0s\033[0m\n" "$PRESENT_BINARY." "[ *ok ]"
             fi
         done
     ;;
-    *) printf "\e[0;91merror:\e[0m -h for help\n" ;;
+    *) printf "usage: maya <operation>\n" ;;
 esac
