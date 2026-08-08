@@ -4,7 +4,7 @@
 # Copyright (C) by Sakaki, 2026.
 # License: GNU General Public License version 3 <https://www.gnu.org/licenses/gpl-3.0.en.html>
 
-MAYA_VERSION=2.1
+MAYA_VERSION=2.2
 MAYA_TREE=/usr/local/share/maya
 
 function rootCheck(){
@@ -25,21 +25,23 @@ function binaryExCheck(){
 
 function dependencieCheck(){
 	if [[ ! -z $DEPENDENCIES ]]; then
-        for dep in "${DEPENDENCIES[@]}"; do
-	    	if ! command -v "$dep" &>> /dev/null; then
-        	    printf "\e[0;91merror:\033[0m $dep is not installed.\n" && exit
-	        fi
+        printf "\033[0;93mWARNING!\033[0m Ensure that the following dependencies are installed; otherwise, compilation will result in an error.\n"
+        for deps in "${DEPENDENCIES[@]}"; do
+            printf "\033[1m$deps\033[0m\n"
         done
-    fi
+        read -p "Do you want to continue? [Y/n] " input
+        [[ $input == "Y" || $input == "y" ]] && continue
+        [[ $input != "y" ]] && exit
+    fi 
 }
 
 case $1 in
 	"--help"|"-h")
-		printf "\e[1musage: maya 'operation' [...]\n\e[4moperations:\e[0m\n" 
+		printf "usage: maya [OPERATION] ...\n"
+        printf "\033[4mabout:\033[0m\n" 
 		printf "%-20s %0s\n" " -h, --help" "show this message."
 	    printf "%-20s %0s\n\n" " -v, --version" "shows the version."
-        printf "%-35s %0s\n" " -a,  --about" "view the metadata (version, name, type, and description) of a package."
-        printf "\e[2m%-35s\e[0m %0s\n" "      --about all" "view the metadata (version, name, type, and description) of all packages."
+        printf "\033[4moperations:\033[0m\n"
 	    printf "%-35s %0s\n" " -l,  --list" "shows all available binaries for installation."
         printf "\e[2m%-35s\e[0m %0s\n" "      --list <package>" "filters the available binaries for installation."
         printf "%-35s %0s\n" " -li, --list-installed" "list all installed binaries."
