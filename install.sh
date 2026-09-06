@@ -1,23 +1,20 @@
 #!/bin/bash
 
-PATH_MAYA_BIN="/usr/local/bin"
-PATH_MAYA_TREE="/usr/local/share/maya"
-PATH_MAYA_REGISTRY="$MAYA_TREE/pkg/.info"
-PATH_MAYA_DOC="$MAYA_TREE/doc"
-
 if [[ $EUID == 0 ]]; then
     if [[ $1 == "--remove" ]]; then
-        if [[ ! -f "$PATH_MAYA_BIN"/maya && ! -d $PATH_MAYA_TREE ]]; then
+        if [[ ! -f /usr/local/bin/maya && ! -d /usr/local/share/maya ]]; then
             printf "\033[0;91merror:\033[0m maya is not installed.\n"
         else
-            rm -f $PATH_MAYA_BIN/maya
-            rm -rf $PATH_MAYA_TREE
+            /usr/bin/rm -f /usr/local/bin/maya
+            /usr/bin/rm -rf /usr/local/share/maya
         fi
     else
-        mkdir -p $PATH_MAYA_TREE $PATH_MAYA_REGISTRY $PATH_MAYA_DOC
-        /usr/bin/install maya $PATH_MAYA_BIN
-        /usr/bin/install {README,LICENSE} $PATH_MAYA_DOC
-        cp -r {pkg,src} $PATH_MAYA_TREE
+        /usr/bin/mkdir -p /usr/local/bin
+        /usr/bin/mkdir -p /usr/local/share/maya/doc
+        /usr/bin/cp -r {pkg,src} /usr/local/share/maya/
+        /usr/bin/mkdir -p /usr/local/share/maya/pkg/.info
+        /usr/bin/install maya /usr/local/bin
+        /usr/bin/install {README,LICENSE} /usr/local/share/maya/doc
     fi
 else
     printf "\033[0;91merror:\033[0m you can't run without root access.\n"

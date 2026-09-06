@@ -7,7 +7,7 @@ SOURCE="https://github.com/kitware/cmake"
 TYPE="development"
 DEPENDENCIES=(
     "git"
-    #"gcc"
+    "gcc"
 	"make"
 )
 

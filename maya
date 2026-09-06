@@ -1,10 +1,9 @@
 #!/bin/bash
 
-# Written from scratch by @sakaki91 using VIM, with a premise similar to Ports.
 # Copyright (C) by Sakaki, 2026.
 # License: GNU General Public License version 3 <https://www.gnu.org/licenses/gpl-3.0.en.html>
 
-MAYA_VERSION=2.2
+MAYA_VERSION=3
 MAYA_TREE=/usr/local/share/maya
 
 function rootCheck(){
@@ -19,39 +18,34 @@ function cleaning(){
 }
 
 function binaryExCheck(){
-	[[ -z $1 ]] && printf "\e[0;91merror:\e[0m empty value.\n" && exit
-	[[ ! -f "$MAYA_TREE/pkg/$1" ]] && printf "\e[0;91merror:\e[0m the \e[1m'$1'\e[0m does not exist.\n" && exit
+    if [[ ! -f "$MAYA_TREE/pkg/$1" ]]; then
+        printf "\e[0;91merror:\e[0m the \e[1m'$1'\e[0m does not exist.\n" && exit
+    fi
 }
 
 function dependencieCheck(){
 	if [[ ! -z $DEPENDENCIES ]]; then
-        printf "\033[0;93mWARNING!\033[0m Ensure that the following dependencies are installed; otherwise, compilation will result in an error.\n"
         for deps in "${DEPENDENCIES[@]}"; do
-            printf "\033[1m$deps\033[0m\n"
+            if ! command -v $deps; then
+                printf "\e[0;91merror:\e[0m the \e[1m'$deps'\e[0m does not exist.\n" && exit
+            fi
         done
-        read -p "Do you want to continue? [Y/n] " input
-        [[ $input == "Y" || $input == "y" ]] && continue
-        [[ $input != "y" ]] && exit
-    fi 
+    fi
 }
 
 case $1 in
 	"--help"|"-h")
-		printf "usage: maya [OPERATION] ...\n"
-        printf "\033[4mabout:\033[0m\n" 
-		printf "%-20s %0s\n" " -h, --help" "show this message."
-	    printf "%-20s %0s\n\n" " -v, --version" "shows the version."
         printf "\033[4moperations:\033[0m\n"
-	    printf "%-35s %0s\n" " -l,  --list" "shows all available binaries for installation."
-        printf "\e[2m%-35s\e[0m %0s\n" "      --list <package>" "filters the available binaries for installation."
-        printf "%-35s %0s\n" " -li, --list-installed" "list all installed binaries."
-        printf "\e[2m%-35s\e[0m %0s\n" "      --list-installed <package>" "filters all installed binaries."
+        printf "%-35s %0s\n" " -in, --install" "install a package."
+        printf "%-35s %0s\n" " -rm, --remove" "remove a package."
         printf "%-35s %0s\n" " -sy, --sync" "this synchronizes maya and recipes."
-        printf "\e[2m%-35s\e[0m %0s\n" "      --sync all" "this synchronizes all installed packages."
-        printf "\e[2m%-35s\e[0m %0s\n" "      --sync <package>" "this synchronizes a specific package."
-        printf "%-35s %0s\n" " -in, --install" "install a binary."
-        printf "%-35s %0s\n" " -rm, --remove" "remove a binary."
         printf "%-35s %0s\n" " -rs, --register-sync" "it scans installed packages for orphaned packages/records."
+	    printf "%-35s %0s\n" " -l,  --list" "shows all available packages for installation."
+        printf "\e[2m%-35s\e[0m %0s\n" "      --list <package>" "filters the available packages for installation."
+        printf "%-35s %0s\n" " -li, --list-installed" "list all installed packages."
+        printf "\e[2m%-35s\e[0m %0s\n" "      --list-installed <package>" "filters all installed packages."
+        printf "\n%-35s %0s\n" " -h, --help" "show this message."
+	    printf "%-35s %0s\n" " -v, --version" "shows the version."
         printf "\n\e[1mReport bugs to: https://github.com/sakaki91/maya\e[0m\n\n"
     ;;
     "--version"|"-v") printf "maya $MAYA_VERSION\nCopyright (C) by Sakaki, 2026.\nLicense: GNU General Public License version 3 <https://www.gnu.org/licenses/gpl-3.0.en.html>\n" ;;
@@ -69,44 +63,21 @@ case $1 in
         fi
     ;;
  	"--list-installed"|"-li")
-        for INSTALLEDPACKAGES in /usr/local/share/maya/pkg/.info/*; do
-            ALL_IN_PKG="$(basename $INSTALLEDPACKAGES)"
-            . "$MAYA_TREE/pkg/$ALL_IN_PKG"
-            printf "%-15s %0s\n" "$NAME" "$DESCRIPTION"
-        done
+        if [[ ! $(ls $MAYA_TREE/pkg/.info/) ]]; then
+            printf "\e[0;91merror:\e[0m no packages installed.\n" && exit
+        else
+            for INSTALLEDPACKAGES in /usr/local/share/maya/pkg/.info/*; do
+                ALL_IN_PKG="$(basename $INSTALLEDPACKAGES)"
+                . "$MAYA_TREE/pkg/$ALL_IN_PKG"
+                printf "%-15s %0s\n" "$NAME" "$DESCRIPTION"
+            done
+        fi
     ;;
 	"--sync"|"-sy")
         rootCheck ; cleaning
         git clone https://github.com/sakaki91/maya /tmp/maya/maya.source
         /usr/bin/install /tmp/maya/maya.source/maya /usr/local/bin/maya ; /usr/bin/install /tmp/maya/maya.source/{README,LICENSE} /usr/local/share/maya/doc/
         cp -r /tmp/maya/maya.source/{pkg,src} /usr/local/share/maya
-        if [[ -z $2 ]]; then
-            printf "\e[0;92mok:\e[0m maya and pkgs synchronized!\n"
-        elif [[ $2 == "all" ]]; then
-            printf "\e[0;93mWARNING!\e[0m This will update all packages directly from their sources \e[1m(even if there are no updates)\e[0m.\nwould you like to continue? \e[1m(this may take some time)\e[0m\n"
-            read -p "[Y/n] " input
-            if [[ $input == "Y" || $input == "y" ]]; then
-                for installedpkg in /usr/local/share/maya/pkg/.info/*; do
-                    INSTALLED_PKG_FILTERED="$(basename $installedpkg)"
-                    printf "$INSTALLED_PKG_FILTERED\n" ; source /usr/local/share/maya/pkg/$INSTALLED_PKG_FILTERED
-                    dependencieCheck ; install ; echo "INSTALLED_VERSION=$VERSION" > "$MAYA_TREE/pkg/.info/$NAME"
-                done
-            elif [[ $input == "N" || $input == "n" ]]; then
-                printf "\e[0;92mok:\e[0m canceled by the operator.\n"    
-            fi
-        else
-		    binaryExCheck "$2"
-		    if [[ ! $(command -v $2) ]]; then
-			    printf "\e[0;91merror:\e[0m \e[1m'$2'\e[0m not installed.\n"
-		    else
-			    source "$MAYA_TREE/pkg/$2" ; source "$MAYA_TREE/pkg/.info/$2"
-			    if [[ $VERSION != $INSTALLED_VERSION || $INSTALLED_VERSION == "git" ]]; then
-				    dependencieCheck ; install ; echo "INSTALLED_VERSION=$VERSION" > "$MAYA_TREE/pkg/.info/$NAME"
-			    else
-				    printf "\e[0;92mok:\e[0m the latest version is installed.\n"
-			    fi
-            fi
-		fi
 	;;
     "--install"|"-in")
 		binaryExCheck "$2" ; rootCheck ; cleaning
@@ -126,13 +97,16 @@ case $1 in
         fi  
     ;;
     "--register-sync"|"-rs")
+        if [[ ! $(ls $MAYA_TREE/pkg/.info ) ]]; then
+            printf "\e[0;91merror:\e[0m no packages installed.\n" && exit
+        fi
         for registerInfo in $MAYA_TREE/pkg/.info/*; do
             PRESENT_BINARY=$(basename $registerInfo)
             if ! command -v $PRESENT_BINARY &>> /dev/null; then
-                printf "%-20s\033[1;91m%0s\033[0m\n" "$PRESENT_BINARY." "[ *orphan package ]" 
+                printf "%-20s\033[1;91m%0s\033[0m\n" "$PRESENT_BINARY." "[ orphan package ]" 
             fi
             if command -v $PRESENT_BINARY &>> /dev/null; then
-                printf "%-20s\033[1;92m%0s\033[0m\n" "$PRESENT_BINARY." "[ *ok ]"
+                printf "%-20s\033[1;92m%0s\033[0m\n" "$PRESENT_BINARY." "[ ok ]"
             fi
         done
     ;;

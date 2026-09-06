@@ -9,7 +9,6 @@ DEPENDENCIES=(
 	"cmake"
     "gcc"
     "git"
-    "opencl-headers"
 )
 
 function install(){
